@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "600238088434",
+    "firebase_url": "https://beaconscannerandroid.firebaseio.com",
+    "project_id": "beaconscannerandroid",
+    "storage_bucket": "beaconscannerandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600238088434:android:b1763c4ed73587b4",
+        "android_client_info": {
+          "package_name": "team1.com.beaconscanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600238088434-5ttjksf8q460jo7ckjmgj6n6p4ocrirs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "team1.com.beaconscanner",
+            "certificate_hash": "ffe6d299dff49c4ff164548166db51a2b149bdb0"
+          }
+        },
+        {
+          "client_id": "600238088434-3tgrdotq525nqpiesfk4aehd900tesco.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjcmA3YDAHQMB8sa3amtq5vSvRRn5YG_g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600238088434-3tgrdotq525nqpiesfk4aehd900tesco.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
