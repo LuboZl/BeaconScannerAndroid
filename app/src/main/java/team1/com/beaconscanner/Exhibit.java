@@ -4,13 +4,10 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Exhibit {
-    String id;
-    String title;
-    String about;
-    String image;
-
-    public Exhibit() {
-    }
+    private String id;
+    private String title;
+    private String about;
+    private String image;
 
     public Exhibit(String id, String title, String about, String image) {
         this.id = id;
@@ -42,7 +39,6 @@ public class Exhibit {
     public void setAbout(String about) {
         this.about = about;
     }
-
 
     public String getImage() {
         return image;

@@ -1,13 +1,7 @@
 package team1.com.beaconscanner;
 
-import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
         mExhibitFirebase = new ExhibitFirebase(this);
         mBluetoothScanner = new BluetoothScanner(this);
 
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
                 intent.putExtra("exhibit_edit",false);
                 startActivity(intent);
 //                goToNewExhibitActivity();
-
             }
         });
         Button test_preview = (Button) findViewById(R.id.btn_preview);
@@ -61,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == BluetoothScanner.REQUEST_ENABLE_BLUETOOTH){
+
+        if (requestCode == BluetoothScanner.REQUEST_ENABLE_BLUETOOTH) {
             switch (resultCode){
                 case RESULT_OK:
                     mBluetoothScanner.initBluetoothScanner();
@@ -71,12 +64,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
                     break;
             }
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        mBluetoothScanner.unregisterReceiver();
-        super.onDestroy();
     }
 
     public void onBluetoothNotRunning(){

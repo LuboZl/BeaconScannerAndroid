@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 
 public class PreviewExhibit extends AppCompatActivity {
-
     private TextView tv_title;
     private ImageView iv_coverImage;
     private TextView tv_about;
@@ -30,7 +29,6 @@ public class PreviewExhibit extends AppCompatActivity {
 
         LoadInfo();
 
-
         fab_edit = (FloatingActionButton) findViewById(R.id.fab);
         fab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +38,6 @@ public class PreviewExhibit extends AppCompatActivity {
                 intent.putExtra("exhibit_edit",true);
                 intent.putExtra("exhibit_id", Integer.parseInt( tv_id.getText()+"" ));
                 startActivity(intent);
-
             }
         });
     }

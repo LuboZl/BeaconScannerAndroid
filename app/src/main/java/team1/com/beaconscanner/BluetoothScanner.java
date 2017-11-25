@@ -1,6 +1,5 @@
 package team1.com.beaconscanner;
 
-import android.*;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -12,17 +11,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-
 public class BluetoothScanner {
-
     private Context mContext;
     private BroadcastReceiver mReceiver;
     private BluetoothAdapter mBluetoothAdapter;
     private static String TAG = "BluetoothScanner";
-    public static int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
+    private static int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
     public static int REQUEST_ENABLE_BLUETOOTH = 100;
-
-
 
     public BluetoothScanner(Context context) {
         mContext = context;
@@ -32,7 +27,7 @@ public class BluetoothScanner {
         initBluetoothScanner();
     }
 
-    public void initBluetoothScanner(){
+    public void initBluetoothScanner() {
         Log.d(TAG, "initBluetoothScanner");
 
         getBluetoothAdapter();
@@ -40,12 +35,11 @@ public class BluetoothScanner {
         startDiscovery();
     }
 
-    public void initBroadcastReceiver(){
+    private void initBroadcastReceiver() {
         Log.d(TAG, "initBroadcastReceiver");
 
         mReceiver = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
-                BluetoothScannerListener bluetoothScannerListener = (BluetoothScannerListener) mContext;
                 String action = intent.getAction();
 
                 if (action == null) {
@@ -55,13 +49,17 @@ public class BluetoothScanner {
                 switch (action) {
                     case BluetoothAdapter.ACTION_DISCOVERY_STARTED:
                         ((BluetoothScannerListener) mContext).onDiscoveryStarted();
+
                         break;
                     case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
                         ((BluetoothScannerListener) mContext).onDiscoveryFinished();
+
                         startDiscovery();
+
                         break;
                     case BluetoothDevice.ACTION_FOUND:
-                        BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                        BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
                         if (device != null) {
                             ((BluetoothScannerListener) mContext).onDeviceFound(device);
                         }
@@ -70,19 +68,20 @@ public class BluetoothScanner {
         };
     }
 
-    public void requestPermissions(){
+    private void requestPermissions() {
         Log.d(TAG, "requestPermissions");
 
         ActivityCompat.requestPermissions( (AppCompatActivity) mContext,
                 new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                 PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
     }
-    
-    public void getBluetoothAdapter(){
+
+    private void getBluetoothAdapter() {
         Log.d(TAG, "getBluetoothAdapter");
 
         if (!isEmulator()) {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
             if (mBluetoothAdapter == null) {
                 ((BluetoothScannerListener) mContext).onDeviceNotSupported();
             }
@@ -94,13 +93,13 @@ public class BluetoothScanner {
         }
     }
 
-    public void startDiscovery(){
+    private void startDiscovery() {
         Log.d(TAG, "startDiscovery");
 
-        mBluetoothAdapter.startDiscovery();
+        if (!isEmulator()) mBluetoothAdapter.startDiscovery();
     }
 
-    public void registerReceiver(){
+    private void registerReceiver() {
         Log.d(TAG, "registerReceiver");
 
         if (!isEmulator()) {
@@ -108,19 +107,12 @@ public class BluetoothScanner {
             filter.addAction(BluetoothDevice.ACTION_FOUND);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+
             mContext.registerReceiver(mReceiver, filter);
         }
     }
 
-    public void unregisterReceiver(){
-        Log.d(TAG, "unregisterReceiver");
-
-        if( !isEmulator() ) {
-            mContext.unregisterReceiver(mReceiver);
-        }
-    }
-
-    public static boolean isEmulator() {
+    private static boolean isEmulator() {
         return Build.FINGERPRINT.startsWith("generic")
                 || Build.FINGERPRINT.startsWith("unknown")
                 || Build.MODEL.contains("google_sdk")
@@ -130,7 +122,6 @@ public class BluetoothScanner {
                 || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
                 || "google_sdk".equals(Build.PRODUCT);
     }
-
 
     public interface BluetoothScannerListener{
         void onDeviceNotSupported();
