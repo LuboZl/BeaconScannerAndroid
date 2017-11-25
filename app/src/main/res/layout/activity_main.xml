@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
-        android:tint="@android:color/white"
-        android:src="@drawable/icon_edit"/>
+        android:src="@drawable/icon_add"
+        android:tint="@android:color/white" />
 
 </android.support.design.widget.CoordinatorLayout>
