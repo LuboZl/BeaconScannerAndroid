@@ -8,17 +8,15 @@ public class Exhibit {
     String title;
     String about;
     String image;
-    String bluetoothAddress;
 
     public Exhibit() {
     }
 
-    public Exhibit(String id, String title, String about, String image, String bluetoothAddress) {
+    public Exhibit(String id, String title, String about, String image) {
         this.id = id;
         this.title = title;
         this.about = about;
         this.image = image;
-        this.bluetoothAddress = bluetoothAddress;
     }
 
     public String getId() {
@@ -45,13 +43,6 @@ public class Exhibit {
         this.about = about;
     }
 
-    public String getBluetoothAddress() {
-        return bluetoothAddress;
-    }
-
-    public void setBluetoothAddress(String bluetoothAddress) {
-        this.bluetoothAddress = bluetoothAddress;
-    }
 
     public String getImage() {
         return image;

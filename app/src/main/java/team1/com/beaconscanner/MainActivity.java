@@ -30,13 +30,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        mDatabase = FirebaseDatabase.getInstance().getReference("dev_previews");
         mBluetoothScanner = new BluetoothScanner(this);
-
-        // firebase test
-        mDatabase = FirebaseDatabase.getInstance().getReference("previews");
-        Exhibit exhibit = new Exhibit(mDatabase.push().getKey(), "Tilgnerova 11", "Testovaci", null, null);
-        mDatabase.child(exhibit.getId()).setValue(exhibit);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -61,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
                 startActivity(intent);
             }
         });
+    }
+
+    void addExhibitToFirebase(BluetoothDevice device){
+        // firebase test
+        Exhibit exhibit = new Exhibit(device.getAddress(), "Title", "About", null);
+        mDatabase.child(exhibit.getId()).setValue(exhibit);
     }
 
     @Override
@@ -106,5 +107,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
     @Override
     public void onDeviceFound(BluetoothDevice device) {
         Log.d(TAG, "onDeviceFound");
+        addExhibitToFirebase(device);
     }
 }
