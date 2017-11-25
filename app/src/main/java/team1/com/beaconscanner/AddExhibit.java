@@ -36,7 +36,7 @@ public class AddExhibit extends AppCompatActivity {
         if(exhibit_edit){   // takze treba nacitat data
 
             int exhibit_id = args.getInt("exhibit_id",-1);
-            Log.i("AAA","Comming to edit exhibit from PreviewActivity");
+             Log.i("AAA","Comming to edit exhibit from PreviewActivity");
 
             if(exhibit_id == -1){
                 // something went wrong
