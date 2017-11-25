@@ -7,12 +7,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -31,13 +36,14 @@ public class MainActivity extends AppCompatActivity {
                 //bluetooth device found
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 Log.d("test", "found device");
-                if(device!=null) {
-                    Log.d("test", device.getName()+" - RSSI :"+intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
+                if (device != null) {
+                    Log.d("test", device.getName() + " - RSSI :" + intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
                 }
 
             }
         }
     };
+
 
     public static class User{
 
@@ -110,27 +116,62 @@ public class MainActivity extends AppCompatActivity {
         });
 
 */
+
+
         // bluetooth scanning
+        if( !isEmulator() ) {
+            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+            IntentFilter filter = new IntentFilter();
 
-        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        IntentFilter filter = new IntentFilter();
+            filter.addAction(BluetoothDevice.ACTION_FOUND);
+            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-
-        registerReceiver(mReceiver, filter);
-        adapter.startDiscovery();
+            registerReceiver(mReceiver, filter);
+            adapter.startDiscovery();
+        }
 
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("AAA","fab clicked!");
+//                Intent intent = new Intent(this, AddExhibit.class);
+                Intent intent = new Intent(getBaseContext(), AddExhibit.class);
+                intent.putExtra("exhibit_edit",false);
+                startActivity(intent);
+//                goToNewExhibitActivity();
 
-
+            }
+        });
+        Button test_preview = (Button) findViewById(R.id.btn_preview);
+        test_preview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("AAA","btn_preview clicked!");
+                Intent intent = new Intent(getBaseContext(), PreviewExhibit.class);
+                startActivity(intent);
+            }
+        });
 
     }
     @Override
     public void onDestroy() {
-        unregisterReceiver(mReceiver);
-
+        if( !isEmulator() ) {
+            unregisterReceiver(mReceiver);
+        }
         super.onDestroy();
     }
+    public static boolean isEmulator() {
+        return Build.FINGERPRINT.startsWith("generic")
+                || Build.FINGERPRINT.startsWith("unknown")
+                || Build.MODEL.contains("google_sdk")
+                || Build.MODEL.contains("Emulator")
+                || Build.MODEL.contains("Android SDK built for x86")
+                || Build.MANUFACTURER.contains("Genymotion")
+                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+                || "google_sdk".equals(Build.PRODUCT);
+    }
+
 }
