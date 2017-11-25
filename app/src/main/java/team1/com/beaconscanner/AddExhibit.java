@@ -25,10 +25,6 @@ public class AddExhibit extends AppCompatActivity {
         et_about = (EditText) findViewById(R.id.et_about);
         et_id    = (TextView) findViewById(R.id.et_id);
 
-
-
-
-
         Bundle args = getIntent().getExtras();
 
         boolean exhibit_edit = args.getBoolean("exhibit_edit",false);
