@@ -8,12 +8,14 @@ public class Exhibit {
     private String title;
     private String about;
     private String image;
+    private String distance;
 
     public Exhibit(String id, String title, String about, String image) {
         this.id = id;
         this.title = title;
         this.about = about;
         this.image = image;
+        this.distance = "5";
     }
 
     public String getId() {
@@ -46,5 +48,13 @@ public class Exhibit {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 }
