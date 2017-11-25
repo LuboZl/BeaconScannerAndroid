@@ -30,13 +30,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
 
         mBluetoothScanner = new BluetoothScanner(this);
-
 
         // firebase test
         mDatabase = FirebaseDatabase.getInstance().getReference("previews");
@@ -48,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("AAA","fab clicked!");
+                Log.d(TAG,"fab clicked!");
 //                Intent intent = new Intent(this, AddExhibit.class);
                 Intent intent = new Intent(getBaseContext(), AddExhibit.class);
                 intent.putExtra("exhibit_edit",false);
@@ -61,12 +56,26 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
         test_preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("AAA","btn_preview clicked!");
+                Log.d(TAG,"btn_preview clicked!");
                 Intent intent = new Intent(getBaseContext(), PreviewExhibit.class);
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == BluetoothScanner.REQUEST_ENABLE_BLUETOOTH){
+            switch (resultCode){
+                case RESULT_OK:
+                    mBluetoothScanner.initBluetoothScanner();
+                    break;
+                case RESULT_CANCELED:
+                    onBluetoothNotRunning();
+                    break;
+            }
+        }
     }
 
     @Override
@@ -75,6 +84,14 @@ public class MainActivity extends AppCompatActivity implements BluetoothScanner.
         super.onDestroy();
     }
 
+    public void onBluetoothNotRunning(){
+        Log.d(TAG, "onBluetoothNotRunning");
+    }
+
+    @Override
+    public void onDeviceNotSupported() {
+        Log.d(TAG, "onDeviceNotSupported");
+    }
 
     @Override
     public void onDiscoveryStarted() {
