@@ -42,7 +42,7 @@ public class AddExhibit extends AppCompatActivity {
                 // something went wrong
             }else {
                 // load data of exhibit from DB
-
+ 
                 et_title.setText("nejaky nazov z DB");
                 et_about.setText("nejaky popis z DB");
                 et_id.setText("id: "+ exhibit_id);
