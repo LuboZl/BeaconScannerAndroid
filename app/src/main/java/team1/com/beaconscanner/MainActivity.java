@@ -16,65 +16,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+public class MainActivity extends AppCompatActivity implements BluetoothScanner.BluetoothScannerListener {
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                Log.d("test", "started");
-
-                //discovery starts, we can show progress dialog or perform other tasks
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                //discovery finishes, dismis progress dialog
-                Log.d("test", "finished");
-
-            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-
-                //bluetooth device found
-                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Log.d("test", "found device");
-                if (device != null) {
-                    Log.d("test", device.getName() + " - RSSI :" + intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
-                }
-
-            }
-        }
-    };
-
-
-    public static class User{
-
-        public String id;
-        public String name;
-        public String date;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-    }
+    private DatabaseReference mDatabase;
+    private BluetoothScanner mBluetoothScanner;
+    private String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,50 +35,13 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                 MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
 
-/*
+        mBluetoothScanner = new BluetoothScanner(this);
+
+
         // firebase test
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        User u = new User();
-        u.setDate("datum123");
-        u.setId("id1");
-        u.setName("Jano");
-
-        myRef.child("Users").setValue(u);
-        //  myRef.push();
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("test","values changed");
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                //  String value = dataSnapshot.getValue(String.class);
-                // Log.d("test", "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("test", "Failed to read value.", error.toException());
-            }
-        });
-
-*/
-
-
-        // bluetooth scanning
-        if( !isEmulator() ) {
-            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-            IntentFilter filter = new IntentFilter();
-
-            filter.addAction(BluetoothDevice.ACTION_FOUND);
-            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-
-            registerReceiver(mReceiver, filter);
-            adapter.startDiscovery();
-        }
+        mDatabase = FirebaseDatabase.getInstance().getReference("previews");
+        Exhibit exhibit = new Exhibit(mDatabase.push().getKey(), "Tilgnerova 11", "Testovaci", null, null);
+        mDatabase.child(exhibit.getId()).setValue(exhibit);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -156,22 +68,26 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     public void onDestroy() {
-        if( !isEmulator() ) {
-            unregisterReceiver(mReceiver);
-        }
+        mBluetoothScanner.unregisterReceiver();
         super.onDestroy();
     }
-    public static boolean isEmulator() {
-        return Build.FINGERPRINT.startsWith("generic")
-                || Build.FINGERPRINT.startsWith("unknown")
-                || Build.MODEL.contains("google_sdk")
-                || Build.MODEL.contains("Emulator")
-                || Build.MODEL.contains("Android SDK built for x86")
-                || Build.MANUFACTURER.contains("Genymotion")
-                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
-                || "google_sdk".equals(Build.PRODUCT);
+
+
+    @Override
+    public void onDiscoveryStarted() {
+        Log.d(TAG, "onDiscoveryStarted");
     }
 
+    @Override
+    public void onDiscoveryFinished() {
+        Log.d(TAG, "onDiscoveryFinished");
+    }
+
+    @Override
+    public void onDeviceFound(BluetoothDevice device) {
+        Log.d(TAG, "onDeviceFound");
+    }
 }
