@@ -1,20 +1,27 @@
 package team1.com.beaconscanner;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
-@IgnoreExtraProperties
-public class Exhibit {
-    private String id;
-    private String title;
-    private String about;
-    private String image;
+public class Exhibit implements Parcelable {
+    String id;
+    String title;
+    String about;
+    String imagePath;
+    String address;
     private String distance;
 
-    public Exhibit(String id, String title, String about, String image) {
+    public Exhibit() {
+    }
+
+    public Exhibit(String id, String title, String about, String imagePath, String address) {
         this.id = id;
         this.title = title;
         this.about = about;
-        this.image = image;
+        this.imagePath = imagePath;
+        this.address = address;
         this.distance = "5";
     }
 
@@ -42,13 +49,23 @@ public class Exhibit {
         this.about = about;
     }
 
-    public String getImage() {
-        return image;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 
     public String getDistance() {
         return distance;
@@ -57,4 +74,40 @@ public class Exhibit {
     public void setDistance(String distance) {
         this.distance = distance;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public Exhibit(Parcel in){
+        String[] data = new String[5];
+        in.readStringArray(data);
+        this.setId(data[0]);
+        this.setTitle(data[1]);
+        this.setAbout(data[2]);
+        this.setImagePath(data[3]);
+        this.setAddress(data[4]);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[]{
+                this.getId(),
+                this.getTitle(),
+                this.getAbout(),
+                this.getImagePath(),
+                this.getAddress()
+        });
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Exhibit createFromParcel(Parcel in) {
+            return new Exhibit(in);
+        }
+
+        public Exhibit[] newArray(int size) {
+            return new Exhibit[size];
+        }
+    };
 }

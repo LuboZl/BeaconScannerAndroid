@@ -15,12 +15,17 @@ public class BluetoothScanner {
     private Context mContext;
     private BroadcastReceiver mReceiver;
     private BluetoothAdapter mBluetoothAdapter;
+    private BluetoothScannerListener mBluetoothScannerListener;
+
     private static String TAG = "BluetoothScanner";
     private static int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
     public static int REQUEST_ENABLE_BLUETOOTH = 100;
 
-    public BluetoothScanner(Context context) {
+
+
+    public BluetoothScanner(Context context, BluetoothScannerListener bluetoothScannerListener) {
         mContext = context;
+        this.mBluetoothScannerListener = bluetoothScannerListener;
 
         initBroadcastReceiver();
         requestPermissions();
@@ -48,20 +53,17 @@ public class BluetoothScanner {
 
                 switch (action) {
                     case BluetoothAdapter.ACTION_DISCOVERY_STARTED:
-                        ((BluetoothScannerListener) mContext).onDiscoveryStarted();
-
+                        mBluetoothScannerListener.onDiscoveryStarted();
                         break;
                     case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
-                        ((BluetoothScannerListener) mContext).onDiscoveryFinished();
-
+                        mBluetoothScannerListener.onDiscoveryFinished();
                         startDiscovery();
 
                         break;
                     case BluetoothDevice.ACTION_FOUND:
-                        BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
+                        BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                         if (device != null) {
-                            ((BluetoothScannerListener) mContext).onDeviceFound(device);
+                            mBluetoothScannerListener.onDeviceFound(device);
                         }
                 }
             }
@@ -83,7 +85,7 @@ public class BluetoothScanner {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
             if (mBluetoothAdapter == null) {
-                ((BluetoothScannerListener) mContext).onDeviceNotSupported();
+                mBluetoothScannerListener.onDeviceNotSupported();
             }
 
             if(!mBluetoothAdapter.isEnabled()){
@@ -112,7 +114,15 @@ public class BluetoothScanner {
         }
     }
 
-    private static boolean isEmulator() {
+    public void unregisterReceiver(){
+        Log.d(TAG, "unregisterReceiver");
+
+        if( !isEmulator() ) {
+            mContext.unregisterReceiver(mReceiver);
+        }
+    }
+
+    public static boolean isEmulator() {
         return Build.FINGERPRINT.startsWith("generic")
                 || Build.FINGERPRINT.startsWith("unknown")
                 || Build.MODEL.contains("google_sdk")
