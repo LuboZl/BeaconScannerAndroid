@@ -8,9 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import team1.com.beaconscanner.exhibit.Exhibit;
 
 public class EditExhibit extends AppCompatActivity {
