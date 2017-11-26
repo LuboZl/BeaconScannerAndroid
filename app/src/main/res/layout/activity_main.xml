@@ -6,13 +6,8 @@
     android:fitsSystemWindows="true"
     tools:context="team1.com.beaconscanner.MainActivity">
 
-    <ListView
-        android:id="@+id/exhibitions"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:clickable="true"
-        android:focusable="true">
-    </ListView>
+
+    <include layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

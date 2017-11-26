@@ -2,9 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="team1.com.beaconscanner.exhibitlist.ExhibitListFragment">
+    tools:context="team1.com.beaconscanner.exhibit.ExhibitListExhibit">
+
     <ListView
         android:id="@+id/fragment_exhibit_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 </FrameLayout>

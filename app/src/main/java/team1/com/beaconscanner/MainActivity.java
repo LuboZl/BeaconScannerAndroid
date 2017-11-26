@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity implements ExhibitListExhibi
         Bundle bundle = new Bundle();
         exhibitListFragment.setArguments(bundle);
         fragmentTransaction
-                .replace(R.id.fragment_holder, exhibitListFragment, "EXH_LIST_FRAGMENT_TAG")
-                .addToBackStack("EXH_LIST_FRAGMENT_TAG")
+                .replace(R.id.fragment_holder, exhibitListFragment, EXH_LIST_FRAGMENT_TAG)
+                .addToBackStack(EXH_LIST_FRAGMENT_TAG)
                 .commit();
     }
 
