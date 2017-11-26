@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
-        android:src="@drawable/icon_edit"
+        android:src="@drawable/ic_edit_black_24dp"
         android:tint="@android:color/white"/>
 
 </android.support.design.widget.CoordinatorLayout>
