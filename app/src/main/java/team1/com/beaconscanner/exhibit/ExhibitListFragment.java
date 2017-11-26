@@ -1,33 +1,36 @@
 package team1.com.beaconscanner.exhibit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 import team1.com.beaconscanner.ExhibitListDataInterface;
+import team1.com.beaconscanner.PreviewExhibit;
 import team1.com.beaconscanner.R;
 
 
-public class ExhibitListExhibit extends Fragment implements ExhibitListDataInterface<Exhibit> {
-    static String TAG = "ExhibitListExhibit";
+public class ExhibitListFragment extends Fragment implements ExhibitListDataInterface<Exhibit> {
+    static String TAG = "ExhibitListFragment";
 
     private OnExhibitListFragmentListener mOnExhibitListFragmentListener;
     private ExhibitListFragmentAdapter mExhibitListFragmentAdapter;
     private ArrayList <Exhibit> mExhibits = new ArrayList<>();
 
-    public ExhibitListExhibit() {
+    public ExhibitListFragment() {
         // Required empty public constructor
     }
 
-    public static ExhibitListExhibit newInstance(ArrayList<Exhibit> exhibits) {
-        ExhibitListExhibit fragment = new ExhibitListExhibit();
+    public static ExhibitListFragment newInstance(ArrayList<Exhibit> exhibits) {
+        ExhibitListFragment fragment = new ExhibitListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -49,6 +52,13 @@ public class ExhibitListExhibit extends Fragment implements ExhibitListDataInter
 
         mExhibitListFragmentAdapter = new ExhibitListFragmentAdapter(getActivity(), R.layout.fragment_exhibit_row, mExhibits);
         listView.setAdapter(mExhibitListFragmentAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Exhibit exhibit = mExhibits.get(position);
+                ((OnExhibitListFragmentListener) getContext()).onExhibitItemClick(exhibit);
+            }
+        });
         return view;
     }
 
@@ -91,5 +101,6 @@ public class ExhibitListExhibit extends Fragment implements ExhibitListDataInter
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnExhibitListFragmentListener {
+        void onExhibitItemClick(Exhibit exhibit);
     }
 }

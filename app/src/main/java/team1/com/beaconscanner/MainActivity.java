@@ -11,9 +11,9 @@ import android.view.View;
 import java.util.ArrayList;
 
 import team1.com.beaconscanner.exhibit.Exhibit;
-import team1.com.beaconscanner.exhibit.ExhibitListExhibit;
+import team1.com.beaconscanner.exhibit.ExhibitListFragment;
 
-public class MainActivity extends AppCompatActivity implements ExhibitListExhibit.OnExhibitListFragmentListener{
+public class MainActivity extends AppCompatActivity implements ExhibitListFragment.OnExhibitListFragmentListener{
     private ExhibitFirebase mExhibitFirebase;
     private BluetoothScanner mBluetoothScanner;
     private String TAG = "MainActivity";
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements ExhibitListExhibi
             @Override
             public void onDataChange(ArrayList<Exhibit> exhibits) {
                 mExhibits = exhibits;
-                ExhibitListExhibit exhibitListFragment = (ExhibitListExhibit) getSupportFragmentManager().findFragmentByTag(EXH_LIST_FRAGMENT_TAG);
+                ExhibitListFragment exhibitListFragment = (ExhibitListFragment) getSupportFragmentManager().findFragmentByTag(EXH_LIST_FRAGMENT_TAG);
 
                 if(exhibitListFragment != null){
                     exhibitListFragment.onDataUpdated(mExhibits);
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements ExhibitListExhibi
     private void setExhibitListFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        ExhibitListExhibit exhibitListFragment = ExhibitListExhibit.newInstance(mExhibits);
+        ExhibitListFragment exhibitListFragment = ExhibitListFragment.newInstance(mExhibits);
 
         Bundle bundle = new Bundle();
         exhibitListFragment.setArguments(bundle);
@@ -149,5 +149,14 @@ public class MainActivity extends AppCompatActivity implements ExhibitListExhibi
 
     public void onBluetoothNotRunning(){
         Log.d(TAG, "onBluetoothNotRunning");
+    }
+
+    @Override
+
+    public void onExhibitItemClick(Exhibit exhibit) {
+    //    TODO: CEZ FRAGMENT
+        Intent intent = new Intent(this, PreviewExhibit.class);
+        intent.putExtra("exhibit", exhibit);
+        startActivity(intent);
     }
 }

@@ -65,11 +65,15 @@ public class ExhibitListFragmentAdapter extends ArrayAdapter<Exhibit> {
         return row;
     }
 
+
+
     private class ExhibitHolder {
         public TextView exhibit_title;
         public TextView exhibit_about;
         public ImageView exhibit_image;
         public TextView exhibit_distance;
     }
+
+
 
 }
