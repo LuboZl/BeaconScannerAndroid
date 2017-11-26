@@ -43,7 +43,7 @@
             android:paddingRight="10dp"
             android:background="@color/colorPrimary"
             android:textColor="#FFFFFF"
-            android:text="Vybrať fotku" />
+            android:text="Vybrať novú fotku" />
 
         <ImageView
             android:id="@+id/image"

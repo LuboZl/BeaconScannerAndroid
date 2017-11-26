@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
     tools:context="team1.com.beaconscanner.AddExhibit">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,33 +15,24 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Exhibit title"
+            android:text="Názov exponátu"
             android:textAlignment="center"
-            android:textSize="40sp" />
+            android:textSize="30sp"/>
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="Obrázok exponátu"
-            android:padding="20dp" />
+            android:layout_marginTop="15dp"
+            android:contentDescription="Obrázok exponátu"/>
 
         <TextView
             android:id="@+id/about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="Some info about item that is exhibitet. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
-            android:textAlignment="center" />
-        <TextView
-            android:id="@+id/id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="ID JE 322"
-            android:textAlignment="center" />
-
+            android:layout_marginTop="15dp"
+            android:text="Popis exponátu"
+            android:textAlignment="center"/>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -48,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="15dp"
+        android:layout_margin="5dp"
         android:src="@drawable/ic_edit_black_24dp"
         android:tint="@android:color/white"/>
 

@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,7 +11,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,47 +63,44 @@ public class AddExhibit extends AppCompatActivity {
         findViewById(R.id.button_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (EasyPermissions.hasPermissions(thisContext, galleryPermissions)) {
                     Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("image/*");
-                    startActivityForResult(intent,PICTURE);
 
-                } else {
+                    intent.setType("image/*");
+
+                    startActivityForResult(intent, PICTURE);
+                }
+                else {
                     EasyPermissions.requestPermissions(thisContext, "Access for storage",101, galleryPermissions);
                 }
             }
         });
-
-
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==PICTURE && resultCode==RESULT_OK && null !=data) {
-
+        if (requestCode == PICTURE && resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
-            String[] prjection ={MediaStore.Images.Media.DATA};
-            Cursor cursor=getContentResolver().query(uri,prjection,null,null,null);
+            String[] prjection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(uri, prjection,null,null,null);
+
             cursor.moveToFirst();
 
-            int columnIndex=cursor.getColumnIndex(prjection[0]);
-            String path=cursor.getString(columnIndex);
+            String path = cursor.getString(cursor.getColumnIndex(prjection[0]));
+
             cursor.close();
 
-            Bitmap selectFile = BitmapFactory.decodeFile(path);
+            Drawable d = new BitmapDrawable(BitmapFactory.decodeFile(path));
 
-            Drawable d = new BitmapDrawable(selectFile);
             imageView.setBackground(d);
-//              Picasso.with(AddExhibit.this).load(path).fit().centerCrop().into(imageView);
-
-//             imageView.setImageBitmap(BitmapFactory.decodeFile(path));
+            // Picasso.with(AddExhibit.this).load(path).fit().centerCrop().into(imageView);
+            // imageView.setImageBitmap(BitmapFactory.decodeFile(path));
 
             mProgressDialog.setMessage("Uploading ...");
             mProgressDialog.show();
+
             StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
 
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -125,7 +120,7 @@ public class AddExhibit extends AppCompatActivity {
         if (titleEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte názov exponátu.", Toast.LENGTH_SHORT).show();
         else if (aboutEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte popis exponátu.", Toast.LENGTH_SHORT).show();
         else if (addressTextView.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte adresu beaconu.", Toast.LENGTH_SHORT).show();
-        else if (null != imageDownloadPath) Toast.makeText(getBaseContext(), "Zadajte obrázok exponátu.", Toast.LENGTH_SHORT).show();
+        else if (imageDownloadPath != null) Toast.makeText(getBaseContext(), "Zadajte obrázok exponátu.", Toast.LENGTH_SHORT).show();
         else {
             Exhibit exhibit = new Exhibit("", titleEditText.getText().toString(), aboutEditText.getText().toString(), imageDownloadPath.toString(), addressTextView.getText().toString());
 

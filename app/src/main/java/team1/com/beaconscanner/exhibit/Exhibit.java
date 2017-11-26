@@ -4,11 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Exhibit implements Parcelable {
-    String id;
-    String title;
-    String about;
-    String imagePath;
-    String address;
+    private String id;
+    private String title;
+    private String about;
+    private String imagePath;
+    private String address;
     private int rssi;
 
     public Exhibit() {
@@ -26,7 +26,6 @@ public class Exhibit implements Parcelable {
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -34,7 +33,6 @@ public class Exhibit implements Parcelable {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -42,7 +40,6 @@ public class Exhibit implements Parcelable {
     public String getAbout() {
         return about;
     }
-
     public void setAbout(String about) {
         this.about = about;
     }
@@ -50,25 +47,20 @@ public class Exhibit implements Parcelable {
     public String getImagePath() {
         return imagePath;
     }
-
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 
-
     public String getAddress() {
         return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
 
-
     public int getRssi() {
         return rssi;
     }
-
     public void setRssi(int distance) {
         this.rssi = distance;
     }
@@ -90,7 +82,7 @@ public class Exhibit implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[]{
+        dest.writeStringArray(new String[] {
                 this.getId(),
                 this.getTitle(),
                 this.getAbout(),

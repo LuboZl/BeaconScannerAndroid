@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
     //    TODO: CEZ FRAGMENT
         Intent intent = new Intent(this, PreviewExhibit.class);
         intent.putExtra("exhibit", exhibit);
+
         startActivity(intent);
     }
 

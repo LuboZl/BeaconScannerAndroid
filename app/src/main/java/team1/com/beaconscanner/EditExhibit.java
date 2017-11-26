@@ -16,7 +16,7 @@ public class EditExhibit extends AppCompatActivity {
     private EditText aboutEditText;
     private TextView addressTextView;
     private ImageView imageView;
-    private String id;
+    private Exhibit exhibit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +28,10 @@ public class EditExhibit extends AppCompatActivity {
         addressTextView = (TextView) findViewById(R.id.address);
         imageView = (ImageView) findViewById(R.id.image);
 
-        id = getIntent().getStringExtra("id");
+        exhibit = getIntent().getExtras().getParcelable("exhibit");
         exhibitFirebase = new ExhibitFirebase(null);
 
-        // TODO: get data from firebase and fill the edit texts
-        // waiting for id from previewExhibit
+        fillActivityFields();
 
         findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,12 +47,22 @@ public class EditExhibit extends AppCompatActivity {
         });
     }
 
+    private void fillActivityFields() {
+        titleEditText.setText(exhibit.getTitle());
+        // TODO imageView.set??
+        aboutEditText.setText(exhibit.getAbout());
+        addressTextView.setText(exhibit.getAddress());
+    }
+
     private void updateInFirebase() {
         if (titleEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte názov exponátu.", Toast.LENGTH_SHORT).show();
         else if (aboutEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte popis exponátu.", Toast.LENGTH_SHORT).show();
         else if (addressTextView.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte adresu beaconu.", Toast.LENGTH_SHORT).show();
         else {
-            Exhibit exhibit = new Exhibit(id, titleEditText.getText().toString(), aboutEditText.getText().toString(), "TODO", addressTextView.getText().toString());
+            exhibit.setTitle(titleEditText.getText().toString());
+            exhibit.setAbout(aboutEditText.getText().toString());
+            exhibit.setImagePath("TODO");
+            exhibit.setAddress(addressTextView.getText().toString());
 
             exhibitFirebase.edit(exhibit);
 
@@ -62,7 +71,7 @@ public class EditExhibit extends AppCompatActivity {
     }
 
     private void removeFromFirebase() {
-        exhibitFirebase.remove(id);
+        exhibitFirebase.remove(exhibit.getId());
 
         Toast.makeText(getBaseContext(), "Exponát bol zmazaný", Toast.LENGTH_SHORT).show();
 
