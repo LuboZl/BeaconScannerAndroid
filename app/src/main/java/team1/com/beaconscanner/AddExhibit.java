@@ -120,7 +120,7 @@ public class AddExhibit extends AppCompatActivity {
         if (titleEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte názov exponátu.", Toast.LENGTH_SHORT).show();
         else if (aboutEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte popis exponátu.", Toast.LENGTH_SHORT).show();
         else if (addressTextView.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte adresu beaconu.", Toast.LENGTH_SHORT).show();
-        else if (imageDownloadPath != null) Toast.makeText(getBaseContext(), "Zadajte obrázok exponátu.", Toast.LENGTH_SHORT).show();
+        else if (imageDownloadPath == null) Toast.makeText(getBaseContext(), "Zadajte obrázok exponátu.", Toast.LENGTH_SHORT).show();
         else {
             Exhibit exhibit = new Exhibit("", titleEditText.getText().toString(), aboutEditText.getText().toString(), imageDownloadPath.toString(), addressTextView.getText().toString());
 

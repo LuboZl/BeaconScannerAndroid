@@ -1,5 +1,6 @@
 package team1.com.beaconscanner;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -75,6 +76,9 @@ public class EditExhibit extends AppCompatActivity {
 
         Toast.makeText(getBaseContext(), "Exponát bol zmazaný", Toast.LENGTH_SHORT).show();
 
-        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        startActivity(intent);
     }
 }
