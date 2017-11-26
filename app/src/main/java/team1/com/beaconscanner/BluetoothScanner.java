@@ -21,8 +21,6 @@ public class BluetoothScanner {
     private static int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
     public static int REQUEST_ENABLE_BLUETOOTH = 100;
 
-
-
     public BluetoothScanner(Context context, BluetoothScannerListener bluetoothScannerListener) {
         mContext = context;
         this.mBluetoothScannerListener = bluetoothScannerListener;
@@ -61,7 +59,7 @@ public class BluetoothScanner {
 
                         break;
                     case BluetoothDevice.ACTION_FOUND:
-                        BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                        BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                         if (device != null) {
                             mBluetoothScannerListener.onDeviceFound(device, intent);
                         }
@@ -122,7 +120,7 @@ public class BluetoothScanner {
         }
     }
 
-    public static boolean isEmulator() {
+    private static boolean isEmulator() {
         return Build.FINGERPRINT.startsWith("generic")
                 || Build.FINGERPRINT.startsWith("unknown")
                 || Build.MODEL.contains("google_sdk")

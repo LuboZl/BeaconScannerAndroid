@@ -4,29 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     >
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="THUMBNAIL" />
+        android:contentDescription="Obrázok exponátu" />
 
     <TextView
         android:id="@+id/fragment_exhibit_row_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TITLE"/>
+        android:text="Exponát"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/fragment_exhibit_row_about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ABOUT"/>
+        android:maxLines="3"
+        android:text="Popis"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/fragment_exhibit_row_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DISTANCE"/>
+        android:text="Približná zdialenosť od vás: X m"/>
 
 </LinearLayout>

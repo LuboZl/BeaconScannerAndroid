@@ -6,8 +6,12 @@
     android:fitsSystemWindows="true"
     tools:context="team1.com.beaconscanner.MainActivity">
 
-
-    <include layout="@layout/content_main" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_holder"
+        android:visibility="visible">
+    </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
