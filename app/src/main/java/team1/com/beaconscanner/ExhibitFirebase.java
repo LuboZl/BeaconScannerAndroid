@@ -52,12 +52,12 @@ public class ExhibitFirebase {
         mPreviewsRef.child(key).setValue(exhibit);
     }
 
-    public void remove(Exhibit exhibit) {
-        mPreviewsRef.child(exhibit.getId()).removeValue();
-    }
-
     public void edit(Exhibit exhibit) {
         mPreviewsRef.child(exhibit.getId()).setValue(exhibit);
+    }
+
+    public void remove(String id) {
+        mPreviewsRef.child(id).removeValue();
     }
 
     interface ExhibitFirebaseListener {

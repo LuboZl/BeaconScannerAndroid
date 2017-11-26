@@ -34,12 +34,18 @@ public class EditExhibit extends AppCompatActivity {
         findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateFirebase();
+                updateInFirebase();
+            }
+        });
+        findViewById(R.id.remove).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeFromFirebase();
             }
         });
     }
 
-    private void updateFirebase() {
+    private void updateInFirebase() {
         if (titleEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte názov exponátu.", Toast.LENGTH_SHORT).show();
         else if (aboutEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte popis exponátu.", Toast.LENGTH_SHORT).show();
         else if (addressTextView.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte adresu beaconu.", Toast.LENGTH_SHORT).show();
@@ -50,5 +56,13 @@ public class EditExhibit extends AppCompatActivity {
 
             Toast.makeText(getBaseContext(), "Exponát bol upravený", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void removeFromFirebase() {
+        exhibitFirebase.remove(id);
+
+        Toast.makeText(getBaseContext(), "Exponát bol zmazaný", Toast.LENGTH_SHORT).show();
+
+        super.onBackPressed();
     }
 }
