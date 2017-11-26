@@ -1,9 +1,7 @@
-package team1.com.beaconscanner;
+package team1.com.beaconscanner.exhibit;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.google.firebase.database.IgnoreExtraProperties;
 
 public class Exhibit implements Parcelable {
     String id;

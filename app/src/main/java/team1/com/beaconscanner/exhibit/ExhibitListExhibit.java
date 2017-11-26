@@ -1,4 +1,4 @@
-package team1.com.beaconscanner.exhibitlist;
+package team1.com.beaconscanner.exhibit;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,30 +7,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import team1.com.beaconscanner.Exhibit;
-import team1.com.beaconscanner.FragmentListDataInterface;
+import team1.com.beaconscanner.ExhibitListDataInterface;
 import team1.com.beaconscanner.R;
 
 
-public class ExhibitListFragment extends Fragment implements FragmentListDataInterface<Exhibit>{
-    static String TAG = "ExhibitListFragment";
+public class ExhibitListExhibit extends Fragment implements ExhibitListDataInterface<Exhibit> {
+    static String TAG = "ExhibitListExhibit";
 
     private OnExhibitListFragmentListener mOnExhibitListFragmentListener;
     private ExhibitListFragmentAdapter mExhibitListFragmentAdapter;
     private ArrayList <Exhibit> mExhibits = new ArrayList<>();
 
-    public ExhibitListFragment() {
+    public ExhibitListExhibit() {
         // Required empty public constructor
     }
 
-    public static ExhibitListFragment newInstance(ArrayList<Exhibit> exhibits) {
-        ExhibitListFragment fragment = new ExhibitListFragment();
+    public static ExhibitListExhibit newInstance(ArrayList<Exhibit> exhibits) {
+        ExhibitListExhibit fragment = new ExhibitListExhibit();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

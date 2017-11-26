@@ -3,20 +3,21 @@ package team1.com.beaconscanner;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import java.util.ArrayList;
-import team1.com.beaconscanner.exhibitlist.ExhibitListFragment;
 
-public class MainActivity extends AppCompatActivity implements ExhibitListFragment.OnExhibitListFragmentListener{
+import team1.com.beaconscanner.exhibit.Exhibit;
+import team1.com.beaconscanner.exhibit.ExhibitListExhibit;
+
+public class MainActivity extends AppCompatActivity implements ExhibitListExhibit.OnExhibitListFragmentListener{
     private ExhibitFirebase mExhibitFirebase;
     private BluetoothScanner mBluetoothScanner;
     private String TAG = "MainActivity";
+    private String EXH_LIST_FRAGMENT_TAG = "EXH_LIST_FRAGMENT_TAG";
     private BluetoothScanner.BluetoothScannerListener mBluetoothScannerListener;
     private ExhibitFirebase.ExhibitFirebaseListener mExhibitFirebaseListener;
     private FragmentManager.OnBackStackChangedListener mOnBackStackChangedListener;
@@ -109,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
             @Override
             public void onDeviceFound(BluetoothDevice device) {
                 Log.d(TAG, "onDeviceFound");
-                mExhibitFirebase.add(new Exhibit(null, "Dell Xps 9560", "Noteboocik", null, device.getAddress()));
             }
         };
     }
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
             @Override
             public void onDataChange(ArrayList<Exhibit> exhibits) {
                 mExhibits = exhibits;
-                ExhibitListFragment exhibitListFragment = (ExhibitListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+                ExhibitListExhibit exhibitListFragment = (ExhibitListExhibit) getSupportFragmentManager().findFragmentByTag(EXH_LIST_FRAGMENT_TAG);
 
                 if(exhibitListFragment != null){
                     exhibitListFragment.onDataUpdated(mExhibits);
@@ -136,13 +136,13 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
     private void setExhibitListFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        ExhibitListFragment exhibitListFragment = ExhibitListFragment.newInstance(mExhibits);
+        ExhibitListExhibit exhibitListFragment = ExhibitListExhibit.newInstance(mExhibits);
 
         Bundle bundle = new Bundle();
         exhibitListFragment.setArguments(bundle);
         fragmentTransaction
-                .replace(R.id.fragment_holder, exhibitListFragment, "exhibit_list_fragment")
-                .addToBackStack("exhibit_list_fragment")
+                .replace(R.id.fragment_holder, exhibitListFragment, "EXH_LIST_FRAGMENT_TAG")
+                .addToBackStack("EXH_LIST_FRAGMENT_TAG")
                 .commit();
     }
 

@@ -1,9 +1,7 @@
-package team1.com.beaconscanner.exhibitlist;
+package team1.com.beaconscanner.exhibit;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import team1.com.beaconscanner.Exhibit;
 import team1.com.beaconscanner.R;
 
 /**
