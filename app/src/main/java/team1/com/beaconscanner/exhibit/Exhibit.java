@@ -9,7 +9,7 @@ public class Exhibit implements Parcelable {
     String about;
     String imagePath;
     String address;
-    private String distance;
+    private int rssi;
 
     public Exhibit() {
     }
@@ -20,7 +20,7 @@ public class Exhibit implements Parcelable {
         this.about = about;
         this.imagePath = imagePath;
         this.address = address;
-        this.distance = "5";
+        this.rssi = -100;
     }
 
     public String getId() {
@@ -65,12 +65,12 @@ public class Exhibit implements Parcelable {
     }
 
 
-    public String getDistance() {
-        return distance;
+    public int getRssi() {
+        return rssi;
     }
 
-    public void setDistance(String distance) {
-        this.distance = distance;
+    public void setRssi(int distance) {
+        this.rssi = distance;
     }
 
     @Override

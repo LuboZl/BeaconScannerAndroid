@@ -52,7 +52,6 @@ public class ExhibitFirebase {
         if(exhibit.getId() == null){
             exhibit.setId(mPreviewsRef.push().getKey());
         }
-
         mPreviewsRef.child(exhibit.getId()).setValue(exhibit);
     }
 
@@ -64,7 +63,9 @@ public class ExhibitFirebase {
         mPreviewsRef.child(exhibit.getId()).setValue(exhibit);
     }
 
-    interface ExhibitFirebaseListener{
+
+
+        interface ExhibitFirebaseListener{
         void onDataChange(ArrayList<Exhibit> exhibits);
         void onCancelled();
     }
