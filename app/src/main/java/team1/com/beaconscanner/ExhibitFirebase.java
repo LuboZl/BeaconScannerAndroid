@@ -1,7 +1,5 @@
 package team1.com.beaconscanner;
 
-import android.util.Log;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -9,14 +7,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import team1.com.beaconscanner.exhibit.Exhibit;
 
 public class ExhibitFirebase {
-    private String TAG = "ExhibitFirebase";
     private DatabaseReference mPreviewsRef;
-    private List <Exhibit> exhibits = new ArrayList<>();
 
     public ExhibitFirebase(final ExhibitFirebaseListener exhibitFirebaseListener) {
         mPreviewsRef = FirebaseDatabase.getInstance().getReference("dev_previews");
@@ -25,7 +20,6 @@ public class ExhibitFirebase {
             mPreviewsRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.d(TAG, "onDataChange");
                     ArrayList<Exhibit> exhibits = new ArrayList<>();
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -37,7 +31,6 @@ public class ExhibitFirebase {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    Log.d(TAG, "onCancelled");
                     exhibitFirebaseListener.onCancelled();
                 }
             });
