@@ -8,20 +8,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AddExhibit extends AppCompatActivity {
-    private EditText et_title;
-    private ImageView et_image;
-    private EditText et_about;
-    private TextView et_id;
+    private EditText titleEditText;
+    private ImageView imageView;
+    private EditText aboutEditText;
+    private TextView idTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_exhibit);
 
-        et_title = (EditText) findViewById(R.id.et_title);
-        et_image = (ImageView) findViewById(R.id.et_image);
-        et_about = (EditText) findViewById(R.id.et_about);
-        et_id    = (TextView) findViewById(R.id.et_id);
+        titleEditText = (EditText) findViewById(R.id.et_title);
+        imageView = (ImageView) findViewById(R.id.et_image);
+        aboutEditText = (EditText) findViewById(R.id.et_about);
+        idTextView = (TextView) findViewById(R.id.et_id);
 
         Bundle args = getIntent().getExtras();
 
@@ -41,9 +41,9 @@ public class AddExhibit extends AppCompatActivity {
             else {
                 // load data of exhibit from DB
  
-                et_title.setText("nejaky nazov z DB");
-                et_about.setText("nejaky popis z DB");
-                et_id.setText("id: "+ exhibit_id);
+                titleEditText.setText("nejaky nazov z DB");
+                aboutEditText.setText("nejaky popis z DB");
+                idTextView.setText("id: "+ exhibit_id);
             }
         }
         else { // ideme pridavat novy item, takze netreba nic nacitavat do poli.

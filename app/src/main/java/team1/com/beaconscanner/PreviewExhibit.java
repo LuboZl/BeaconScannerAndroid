@@ -9,12 +9,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 public class PreviewExhibit extends AppCompatActivity {
-    private TextView tv_title;
-    private ImageView iv_coverImage;
-    private TextView tv_about;
-    private TextView tv_id;
+    private TextView titleTextView;
+    private ImageView imageView;
+    private TextView aboutTextView;
+    private TextView idTextView;
     private FloatingActionButton fab_edit;
 
     @Override
@@ -22,10 +21,10 @@ public class PreviewExhibit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_exhibit);
 
-        tv_title = (TextView) findViewById(R.id.tv_title);
-        iv_coverImage = (ImageView) findViewById(R.id.iv_coverImage);
-        tv_about = (TextView) findViewById(R.id.tv_about);
-        tv_id = (TextView) findViewById(R.id.tv_id);
+        titleTextView = (TextView) findViewById(R.id.title);
+        imageView = (ImageView) findViewById(R.id.image);
+        aboutTextView = (TextView) findViewById(R.id.about);
+        idTextView = (TextView) findViewById(R.id.id);
 
         LoadInfo();
 
@@ -36,16 +35,16 @@ public class PreviewExhibit extends AppCompatActivity {
                 Log.i("AAA","fab edit clicked!");
                 Intent intent = new Intent(getBaseContext(), AddExhibit.class);
                 intent.putExtra("exhibit_edit",true);
-                intent.putExtra("exhibit_id", Integer.parseInt( tv_id.getText()+"" ));
+                intent.putExtra("exhibit_id", Integer.parseInt( idTextView.getText()+"" ));
                 startActivity(intent);
             }
         });
     }
 
     public void LoadInfo(){
-        tv_title.setText("NAZOV DIELA");
+        titleTextView.setText("NAZOV DIELA");
 //        iv_coverImage
-        tv_about.setText("NIECO O TOMTO DIELE TU BUDE NAPISANE NEVIEM TERAZ CO LOREM LOREM LOREM");
-        tv_id.setText("433");
+        aboutTextView.setText("NIECO O TOMTO DIELE TU BUDE NAPISANE NEVIEM TERAZ CO LOREM LOREM LOREM");
+        idTextView.setText("433");
     }
 }

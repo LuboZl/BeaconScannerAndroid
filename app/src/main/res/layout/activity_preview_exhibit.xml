@@ -6,36 +6,35 @@
     tools:context="team1.com.beaconscanner.AddExhibit">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Exhibit title"
             android:textAlignment="center"
-            android:textSize="40dp" />
+            android:textSize="40sp" />
 
         <ImageView
-            android:id="@+id/iv_coverImage"
+            android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            app:srcCompat="@drawable/rain_android" />
+            android:contentDescription="Obrázok exponátu"
+            android:padding="20dp" />
 
         <TextView
-            android:id="@+id/tv_about"
+            android:id="@+id/about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
             android:text="Some info about item that is exhibitet. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
             android:textAlignment="center" />
         <TextView
-            android:id="@+id/tv_id"
+            android:id="@+id/id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
@@ -49,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="50px"
+        android:layout_margin="15dp"
         android:src="@drawable/icon_edit"
         android:tint="@android:color/white"/>
 

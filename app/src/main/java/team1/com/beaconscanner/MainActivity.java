@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
         mBluetoothScannerListener = getBluetoothScannerListener();
         mBluetoothScanner = new BluetoothScanner(this, mBluetoothScannerListener);
 
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
