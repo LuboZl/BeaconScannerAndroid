@@ -61,7 +61,7 @@ public class BluetoothScanner {
                     case BluetoothDevice.ACTION_FOUND:
                         BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                         if (device != null) {
-                            mBluetoothScannerListener.onDeviceFound(device);
+                            mBluetoothScannerListener.onDeviceFound(device, intent);
                         }
                 }
             }
@@ -135,6 +135,6 @@ public class BluetoothScanner {
         void onDeviceNotSupported();
         void onDiscoveryStarted();
         void onDiscoveryFinished();
-        void onDeviceFound(BluetoothDevice device);
+        void onDeviceFound(BluetoothDevice device, Intent intent);
     }
 }

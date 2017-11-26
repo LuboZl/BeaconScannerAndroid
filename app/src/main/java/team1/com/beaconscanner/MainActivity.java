@@ -4,11 +4,15 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import team1.com.beaconscanner.exhibit.Exhibit;
 import team1.com.beaconscanner.exhibit.ExhibitListFragment;
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
     public View mFragmentHolder;
 
     public ArrayList<Exhibit> mExhibits = new ArrayList<>();
+    public ArrayList<Exhibit> mFoundExhibits = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,11 +99,31 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
             @Override
             public void onDiscoveryFinished() {
                 Log.d(TAG, "onDiscoveryFinished");
+                Log.d(TAG,"Found exhibits: "+mFoundExhibits.size());
+
+                // zosortujem na zaklade rssi
+                Collections.sort(mFoundExhibits, new RssiComparator());
+
+                ExhibitListFragment exhibitListFragment = (ExhibitListFragment) getSupportFragmentManager().findFragmentByTag(EXH_LIST_FRAGMENT_TAG);
+                if(exhibitListFragment != null){
+                    exhibitListFragment.onDataUpdated(mFoundExhibits);
+                }
+
+                // zmazem zoznam
+                mFoundExhibits.clear();
             }
 
             @Override
-            public void onDeviceFound(BluetoothDevice device) {
-                Log.d(TAG, "onDeviceFound");
+            public void onDeviceFound(BluetoothDevice device, Intent intent) {
+
+                Exhibit foundExhibit = getExhibit(device.getAddress());
+                if(foundExhibit!=null) {
+                    Short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
+                    foundExhibit.setRssi(rssi);
+                    mFoundExhibits.add(foundExhibit);
+                }else{
+                //    mExhibitFirebase.add(new Exhibit(null,device.getName(), "test", "", device.getAddress()));
+                }
             }
         };
     }
@@ -148,4 +173,24 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
         intent.putExtra("exhibit", exhibit);
         startActivity(intent);
     }
+
+    public Exhibit getExhibit(String adress) {
+
+        for(Exhibit e: mExhibits){
+            if(adress.equals(e.getAddress())){
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public class RssiComparator implements Comparator<Exhibit> {
+
+        @Override
+        public int compare(Exhibit obj1, Exhibit obj2) {
+            return obj2.getRssi() - obj1.getRssi();
+
+        }
+    }
+
 }
