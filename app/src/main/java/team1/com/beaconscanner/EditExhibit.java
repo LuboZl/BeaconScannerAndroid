@@ -31,6 +31,9 @@ public class EditExhibit extends AppCompatActivity {
         id = getIntent().getStringExtra("id");
         exhibitFirebase = new ExhibitFirebase(null);
 
+        // TODO: get data from firebase and fill the edit texts
+        // waiting for id from previewExhibit
+
         findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
