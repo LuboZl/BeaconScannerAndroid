@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    tools:context="team1.com.beaconscanner.AddExhibit"
+    tools:context="team1.com.beaconscanner.EditExhibit"
     android:orientation="vertical">
 
     <EditText
@@ -51,10 +51,10 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/add"
+        android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Pridať nový exponát" />
+        android:text="Upraviť exponát" />
 
 </LinearLayout>

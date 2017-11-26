@@ -26,22 +26,22 @@ public class PreviewExhibit extends AppCompatActivity {
         aboutTextView = (TextView) findViewById(R.id.about);
         idTextView = (TextView) findViewById(R.id.id);
 
-        LoadInfo();
+        loadInfo();
 
         fab_edit = (FloatingActionButton) findViewById(R.id.fab);
         fab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("AAA","fab edit clicked!");
-                Intent intent = new Intent(getBaseContext(), AddExhibit.class);
-                intent.putExtra("exhibit_edit",true);
-                intent.putExtra("exhibit_id", Integer.parseInt( idTextView.getText()+"" ));
+                Intent intent = new Intent(getBaseContext(), EditExhibit.class);
+
+                intent.putExtra(idTextView.getText().toString(), Integer.parseInt( idTextView.getText().toString() ));
+
                 startActivity(intent);
             }
         });
     }
 
-    public void LoadInfo(){
+    public void loadInfo(){
         titleTextView.setText("NAZOV DIELA");
 //        iv_coverImage
         aboutTextView.setText("NIECO O TOMTO DIELE TU BUDE NAPISANE NEVIEM TERAZ CO LOREM LOREM LOREM");

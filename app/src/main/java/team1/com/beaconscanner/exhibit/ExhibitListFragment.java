@@ -1,7 +1,6 @@
 package team1.com.beaconscanner.exhibit;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,9 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import team1.com.beaconscanner.ExhibitListDataInterface;
-import team1.com.beaconscanner.PreviewExhibit;
 import team1.com.beaconscanner.R;
-
 
 public class ExhibitListFragment extends Fragment implements ExhibitListDataInterface<Exhibit> {
     static String TAG = "ExhibitListFragment";
@@ -31,14 +28,16 @@ public class ExhibitListFragment extends Fragment implements ExhibitListDataInte
 
     public static ExhibitListFragment newInstance(ArrayList<Exhibit> exhibits) {
         ExhibitListFragment fragment = new ExhibitListFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+
+        fragment.setArguments(new Bundle());
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mOnExhibitListFragmentListener = (OnExhibitListFragmentListener) getActivity();
     }
 
@@ -59,6 +58,7 @@ public class ExhibitListFragment extends Fragment implements ExhibitListDataInte
                 ((OnExhibitListFragmentListener) getContext()).onExhibitItemClick(exhibit);
             }
         });
+
         return view;
     }
 
@@ -66,9 +66,11 @@ public class ExhibitListFragment extends Fragment implements ExhibitListDataInte
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnExhibitListFragmentListener) {
             mOnExhibitListFragmentListener = (OnExhibitListFragmentListener) context;
-        } else {
+        }
+        else {
             throw new RuntimeException(context.toString()
                     + " must implement OnExhibitListFragmentListener");
         }
@@ -77,6 +79,7 @@ public class ExhibitListFragment extends Fragment implements ExhibitListDataInte
     @Override
     public void onDetach() {
         super.onDetach();
+
         mOnExhibitListFragmentListener = null;
     }
 

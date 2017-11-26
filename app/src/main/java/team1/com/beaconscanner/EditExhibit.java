@@ -8,45 +8,50 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import team1.com.beaconscanner.exhibit.Exhibit;
 
-public class AddExhibit extends AppCompatActivity {
+public class EditExhibit extends AppCompatActivity {
     private ExhibitFirebase exhibitFirebase;
     private EditText titleEditText;
     private EditText aboutEditText;
     private TextView addressTextView;
     private ImageView imageView;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_exhibit);
+        setContentView(R.layout.activity_edit_exhibit);
 
         titleEditText = (EditText) findViewById(R.id.title);
         aboutEditText = (EditText) findViewById(R.id.about);
         addressTextView = (TextView) findViewById(R.id.address);
         imageView = (ImageView) findViewById(R.id.image);
 
+        id = getIntent().getStringExtra("id");
         exhibitFirebase = new ExhibitFirebase(null);
 
-        findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveToFirebase();
+                updateFirebase();
             }
         });
     }
 
-    private void saveToFirebase() {
+    private void updateFirebase() {
         if (titleEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte názov exponátu.", Toast.LENGTH_SHORT).show();
         else if (aboutEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte popis exponátu.", Toast.LENGTH_SHORT).show();
         else if (addressTextView.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte adresu beaconu.", Toast.LENGTH_SHORT).show();
         else {
-            Exhibit exhibit = new Exhibit("", titleEditText.getText().toString(), aboutEditText.getText().toString(), "TODO", addressTextView.getText().toString());
+            Exhibit exhibit = new Exhibit(id, titleEditText.getText().toString(), aboutEditText.getText().toString(), "TODO", addressTextView.getText().toString());
 
-            exhibitFirebase.add(exhibit);
+            exhibitFirebase.edit(exhibit);
 
-            Toast.makeText(getBaseContext(), "Exponát bol uložený", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Exponát bol upravený", Toast.LENGTH_SHORT).show();
         }
     }
 }
