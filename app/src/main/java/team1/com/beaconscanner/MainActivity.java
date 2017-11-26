@@ -18,8 +18,6 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
     private BluetoothScanner mBluetoothScanner;
     private String TAG = "MainActivity";
     private String EXH_LIST_FRAGMENT_TAG = "EXH_LIST_FRAGMENT_TAG";
-    private BluetoothScanner.BluetoothScannerListener mBluetoothScannerListener;
-    private ExhibitFirebase.ExhibitFirebaseListener mExhibitFirebaseListener;
     private FragmentManager.OnBackStackChangedListener mOnBackStackChangedListener;
 
     public View mFragmentHolder;
@@ -35,22 +33,13 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
 
         mOnBackStackChangedListener = getOnBackStackChangedListener();
 
-        mExhibitFirebaseListener = getExhibitFirebaseListener();
-        mExhibitFirebase = new ExhibitFirebase(this, mExhibitFirebaseListener);
+        mExhibitFirebase = new ExhibitFirebase(getExhibitFirebaseListener());
+        mBluetoothScanner = new BluetoothScanner(this, getBluetoothScannerListener());
 
-        mBluetoothScannerListener = getBluetoothScannerListener();
-        mBluetoothScanner = new BluetoothScanner(this, mBluetoothScannerListener);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AddExhibit.class);
-                intent.putExtra("exhibit_edit",false);
-                startActivity(intent);
-//                goToNewExhibitActivity();
-
+                startActivity(new Intent(getBaseContext(), AddExhibit.class));
             }
         });
 
@@ -60,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == BluetoothScanner.REQUEST_ENABLE_BLUETOOTH){
+
+        if (requestCode == BluetoothScanner.REQUEST_ENABLE_BLUETOOTH) {
             switch (resultCode){
                 case RESULT_OK:
                     mBluetoothScanner.initBluetoothScanner();
@@ -79,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
     }
 
 
-    private FragmentManager.OnBackStackChangedListener getOnBackStackChangedListener(){
+    private FragmentManager.OnBackStackChangedListener getOnBackStackChangedListener() {
         return new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
@@ -89,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
     }
 
 
-    private BluetoothScanner.BluetoothScannerListener getBluetoothScannerListener(){
+    private BluetoothScanner.BluetoothScannerListener getBluetoothScannerListener() {
         return new BluetoothScanner.BluetoothScannerListener() {
             @Override
             public void onDeviceNotSupported() {
@@ -132,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
         };
     }
 
-    private void setExhibitListFragment(){
+    private void setExhibitListFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         ExhibitListFragment exhibitListFragment = ExhibitListFragment.newInstance(mExhibits);

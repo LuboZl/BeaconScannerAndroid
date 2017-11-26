@@ -1,6 +1,5 @@
 package team1.com.beaconscanner;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,54 +15,52 @@ import team1.com.beaconscanner.exhibit.Exhibit;
 
 public class ExhibitFirebase {
     private String TAG = "ExhibitFirebase";
-    private Context mContext;
     private DatabaseReference mPreviewsRef;
-    private ExhibitFirebaseListener mExhibitFirebaseListener;
     private List <Exhibit> exhibits = new ArrayList<>();
 
-    public ExhibitFirebase(Context mContext, final ExhibitFirebaseListener exhibitFirebaseListener) {
-        this.mContext = mContext;
-        this.mExhibitFirebaseListener = exhibitFirebaseListener;
-
+    public ExhibitFirebase(final ExhibitFirebaseListener exhibitFirebaseListener) {
         mPreviewsRef = FirebaseDatabase.getInstance().getReference("dev_previews");
-        mPreviewsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange");
-                ArrayList<Exhibit> exhibits = new ArrayList<>();
 
-                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    exhibits.add(snapshot.getValue(Exhibit.class));
+        if (exhibitFirebaseListener != null) {
+            mPreviewsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.d(TAG, "onDataChange");
+                    ArrayList<Exhibit> exhibits = new ArrayList<>();
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        exhibits.add(snapshot.getValue(Exhibit.class));
+                    }
+
+                    exhibitFirebaseListener.onDataChange(exhibits);
                 }
 
-                mExhibitFirebaseListener.onDataChange(exhibits);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled");
-                mExhibitFirebaseListener.onCancelled();
-            }
-        });
-    }
-
-    public void add(Exhibit exhibit){
-        if(exhibit.getId() == null){
-            exhibit.setId(mPreviewsRef.push().getKey());
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled");
+                    exhibitFirebaseListener.onCancelled();
+                }
+            });
         }
-
-        mPreviewsRef.child(exhibit.getId()).setValue(exhibit);
     }
 
-    public void remove(Exhibit exhibit){
+    public void add(Exhibit exhibit) {
+        String key = mPreviewsRef.push().getKey();
+
+        exhibit.setId(key);
+
+        mPreviewsRef.child(key).setValue(exhibit);
+    }
+
+    public void remove(Exhibit exhibit) {
         mPreviewsRef.child(exhibit.getId()).removeValue();
     }
 
-    public void edit(Exhibit exhibit){
+    public void edit(Exhibit exhibit) {
         mPreviewsRef.child(exhibit.getId()).setValue(exhibit);
     }
 
-    interface ExhibitFirebaseListener{
+    interface ExhibitFirebaseListener {
         void onDataChange(ArrayList<Exhibit> exhibits);
         void onCancelled();
     }
