@@ -87,7 +87,7 @@ public class ExhibitListFragment extends Fragment implements ExhibitListDataInte
     public void onDataUpdated(ArrayList<Exhibit> list) {
         Log.d(TAG, "onDataUpdated");
 
-        mExhibits = list;
+        mExhibits = new ArrayList(list);
         mExhibitListFragmentAdapter.updateData(mExhibits);
         mExhibitListFragmentAdapter.notifyDataSetChanged();
     }
