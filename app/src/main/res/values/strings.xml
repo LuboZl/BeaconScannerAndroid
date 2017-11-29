@@ -1,6 +1,44 @@
 <resources>
     <string name="app_name">BeaconScanner</string>
 
+    <!--activity_add_exhibit-->
+    <string name="add_exhibit_name">Názov exponátu</string>
+    <string name="add_exhibit_about">Popis</string>
+    <string name="add_exhibit_id">Beacon ID</string>
+    <string name="add_exhibit_choose_image">Vybrať fotku</string>
+    <string name="add_exhibit_image">Obrázok exponátu</string>
+    <string name="add_exhibit_save">Pridať nový exponát</string>
+    <!--activity_edit_exhibit-->
+    <string name="edit_exhibit_name">Názov exponátu</string>
+    <string name="edit_exhibit_about">Popis</string>
+    <string name="edit_exhibit_id">Beacon ID</string>
+    <string name="edit_exhibit_choose_image">Vybrať novú fotku</string>
+    <string name="edit_exhibit_image">Obrázok exponátu</string>
+    <string name="edit_exhibit_save">Uložiť zmeny</string>
+    <string name="edit_exhibit_delete">Zmazať exponát</string>
+    <!--activity_preview_exhibit-->
+    <string name="preview_exhibit_name">Názov exponátu</string>
+    <string name="preview_exhibit_about">Popis</string>
+    <string name="preview_exhibit_image">Obrázok exponátu</string>
+    <!--EditExhibit.java-->
+    <string name="editExhibit_uploading">Uploadujem ...</string>
+    <string name="editExhibit_upload_done">Upload skončil</string>
+    <string name="editExhibit_validation_name">Zadajte názov exponátu.</string>
+    <string name="editExhibit_validation_about">Zadajte popis exponátu.</string>
+    <string name="editExhibit_validation_id">Zadajte adresu beaconu.</string>
+    <string name="editExhibit_validation_image">Zadajte obrázok exponátu.</string>
+    <string name="editExhibit_saved">Exponát uloŽený.</string>
+
+    <!--addExhibit.java-->
+    <string name="addExhibit_uploading">Uploadujem ...</string>
+    <string name="addExhibit_upload_done">Upload skončil</string>
+    <string name="addExhibit_validation_name">Zadajte názov exponátu.</string>
+    <string name="addExhibit_validation_about">Zadajte popis exponátu.</string>
+    <string name="addExhibit_validation_id">Zadajte adresu beaconu.</string>
+    <string name="addExhibit_validation_image">Zadajte obrázok exponátu.</string>
+    <string name="addExhibit_saved">Exponát uloŽený.</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

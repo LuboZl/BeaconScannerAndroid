@@ -11,14 +11,14 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Názov exponátu"/>
+        android:hint="@string/edit_exhibit_name"/>
 
     <EditText
         android:id="@+id/about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="Popis"
+        android:hint="@string/edit_exhibit_about"
         android:selectAllOnFocus="false"
         android:singleLine="false" />
 
@@ -27,32 +27,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="Beacon ID " />
+        android:hint="@string/edit_exhibit_id" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/button_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
+        android:background="@color/colorPrimary"
+        android:textColor="#FFFFFF"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/edit_exhibit_choose_image" />
 
-        <Button
-            android:id="@+id/button_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:background="@color/colorPrimary"
-            android:textColor="#FFFFFF"
-            android:text="Vybrať novú fotku" />
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="Obrázok exponátu"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="@string/edit_exhibit_image"
+        android:layout_weight="1"/>
 
     <Button
         android:id="@+id/edit"
@@ -60,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@color/colorPrimary"
-        android:text="Upraviť exponát"
+        android:text="@string/edit_exhibit_save"
         android:textColor="#FFFFFF" />
 
     <Button
@@ -69,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:background="@android:color/holo_red_light"
-        android:text="Zmazať exponát"
+        android:text="@string/edit_exhibit_delete"
         android:textColor="#FFFFFF" />
 
 </LinearLayout>

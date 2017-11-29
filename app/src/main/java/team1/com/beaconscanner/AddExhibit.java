@@ -33,10 +33,11 @@ public class AddExhibit extends AppCompatActivity {
     private TextView addressTextView;
     private ImageView imageView;
 
-    public static final int PICTURE = 1;
+    public static final int PICTURE= 1;
     private String[] galleryPermissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private StorageReference mStorage;
     private ProgressDialog mProgressDialog;
+    private Uri selectedImageDataUri;
     private Uri imageDownloadPath;
 
     @Override
@@ -65,9 +66,7 @@ public class AddExhibit extends AppCompatActivity {
             public void onClick(View view) {
                 if (EasyPermissions.hasPermissions(thisContext, galleryPermissions)) {
                     Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
                     intent.setType("image/*");
-
                     startActivityForResult(intent, PICTURE);
                 }
                 else {
@@ -82,51 +81,44 @@ public class AddExhibit extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICTURE && resultCode == RESULT_OK && data != null) {
-            Uri uri = data.getData();
-            String[] prjection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(uri, prjection,null,null,null);
+            selectedImageDataUri = data.getData();
+            Picasso.with(AddExhibit.this).load(selectedImageDataUri).centerCrop().fit().into(imageView);
 
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImageDataUri, projection,null,null,null);
             cursor.moveToFirst();
-
-            String path = cursor.getString(cursor.getColumnIndex(prjection[0]));
-
+            String path = cursor.getString(cursor.getColumnIndex(projection[0]));
             cursor.close();
-
             Drawable d = new BitmapDrawable(BitmapFactory.decodeFile(path));
-
             imageView.setBackground(d);
-            // Picasso.with(AddExhibit.this).load(path).fit().centerCrop().into(imageView);
-            // imageView.setImageBitmap(BitmapFactory.decodeFile(path));
 
-            mProgressDialog.setMessage("Uploading ...");
-            mProgressDialog.show();
 
-            StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
 
-            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            StorageReference filepath = mStorage.child("Photos").child(selectedImageDataUri.getLastPathSegment());
+
+            filepath.putFile(selectedImageDataUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mProgressDialog.dismiss();
-
                     imageDownloadPath = taskSnapshot.getDownloadUrl();
-
-                    Picasso.with(AddExhibit.this).load(imageDownloadPath).fit().centerCrop().into(imageView);
-                    Toast.makeText(AddExhibit.this,"upload done", Toast.LENGTH_SHORT).show();
+//                    Picasso.with(AddExhibit.this).load(imageDownloadPath).centerCrop().fit().into(imageView);
+                    Toast.makeText(AddExhibit.this, getString(R.string.addExhibit_upload_done), Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
     private void saveToFirebase() {
-        if (titleEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte názov exponátu.", Toast.LENGTH_SHORT).show();
-        else if (aboutEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte popis exponátu.", Toast.LENGTH_SHORT).show();
-        else if (addressTextView.getText().toString().equals("")) Toast.makeText(getBaseContext(), "Zadajte adresu beaconu.", Toast.LENGTH_SHORT).show();
-        else if (imageDownloadPath == null) Toast.makeText(getBaseContext(), "Zadajte obrázok exponátu.", Toast.LENGTH_SHORT).show();
+        if (titleEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), getString(R.string.addExhibit_validation_name), Toast.LENGTH_SHORT).show();
+        else if (aboutEditText.getText().toString().equals("")) Toast.makeText(getBaseContext(), getString(R.string.addExhibit_validation_about), Toast.LENGTH_SHORT).show();
+        else if (addressTextView.getText().toString().equals("")) Toast.makeText(getBaseContext(), getString(R.string.addExhibit_validation_id), Toast.LENGTH_SHORT).show();
+        else if (selectedImageDataUri == null) Toast.makeText(getBaseContext(), getString(R.string.addExhibit_validation_image), Toast.LENGTH_SHORT).show();
         else {
+
             Exhibit exhibit = new Exhibit("", titleEditText.getText().toString(), aboutEditText.getText().toString(), imageDownloadPath.toString(), addressTextView.getText().toString());
 
             exhibitFirebase.add(exhibit);
 
-            Toast.makeText(getBaseContext(), "Exponát bol uložený", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), getString(R.string.addExhibit_saved), Toast.LENGTH_SHORT).show();
         }
     }
 }

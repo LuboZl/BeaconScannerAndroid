@@ -6,34 +6,41 @@
     android:padding="15dp"
     tools:context="team1.com.beaconscanner.AddExhibit">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/title"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Názov exponátu"
-            android:textAlignment="center"
-            android:textSize="30sp"/>
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:contentDescription="Obrázok exponátu"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/about"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Popis exponátu"
-            android:textAlignment="center"/>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/preview_exhibit_name"
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="800px"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_name"
+                    android:contentDescription="@string/preview_exhibit_image" />
+
+                <TextView
+                    android:id="@+id/about"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:text="@string/preview_exhibit_about"
+                    android:textAlignment="center" />
+            </LinearLayout>
+        </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
