@@ -82,17 +82,14 @@ public class AddExhibit extends AppCompatActivity {
 
         if (requestCode == PICTURE && resultCode == RESULT_OK && data != null) {
             selectedImageDataUri = data.getData();
-            Picasso.with(AddExhibit.this).load(selectedImageDataUri).centerCrop().fit().into(imageView);
-
-            String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(selectedImageDataUri, projection,null,null,null);
-            cursor.moveToFirst();
-            String path = cursor.getString(cursor.getColumnIndex(projection[0]));
-            cursor.close();
-            Drawable d = new BitmapDrawable(BitmapFactory.decodeFile(path));
-            imageView.setBackground(d);
-
-
+            Picasso.with(AddExhibit.this)
+                    .load(selectedImageDataUri)
+//                    .placeholder(R.drawable.ic_action_name)
+//                    .error(R.drawable.user_placeholder_error)
+//                    .resize(800,800)
+                    .centerCrop()
+                    .fit()
+                    .into(imageView);
 
             StorageReference filepath = mStorage.child("Photos").child(selectedImageDataUri.getLastPathSegment());
 

@@ -50,10 +50,11 @@ public class PreviewExhibit extends AppCompatActivity {
                 .load( Uri.parse( exhibit.getImagePath() ) )
 //                .placeholder(R.drawable.ic_action_name)
 //                .error(R.drawable.user_placeholder_error)
-                .resize(800,800)
+//                .resize(800,800)
                 .centerCrop()
+                .fit()
                 .into(imageView)
-                ;
+        ;
         aboutTextView.setText(exhibit.getAbout());
     }
 

@@ -111,7 +111,15 @@ public class EditExhibit extends AppCompatActivity {
 
     private void fillActivityFields() {
         titleEditText.setText(exhibit.getTitle());
-        // TODO imageView.set??
+        Picasso.with(EditExhibit.this)
+                .load( Uri.parse( exhibit.getImagePath() ) )
+//                .placeholder(R.drawable.ic_action_name)
+//                .error(R.drawable.user_placeholder_error)
+//                .resize(800,800)
+                .centerCrop()
+                .fit()
+                .into(imageView)
+        ;
         aboutEditText.setText(exhibit.getAbout());
         addressTextView.setText(exhibit.getAddress());
     }
