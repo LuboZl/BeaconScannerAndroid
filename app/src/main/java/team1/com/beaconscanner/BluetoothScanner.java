@@ -11,11 +11,20 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.util.ArrayList;
+
+import team1.com.beaconscanner.device.MBluetoothDevice;
+
 public class BluetoothScanner {
     private Context mContext;
     private BroadcastReceiver mReceiver;
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothScannerListener mBluetoothScannerListener;
+    private ArrayList<MBluetoothDevice> mDevices = new ArrayList<>();
+
+    public ArrayList<MBluetoothDevice> getDevices() {
+        return mDevices;
+    }
 
     private static String TAG = "BluetoothScanner";
     private static int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
@@ -51,6 +60,7 @@ public class BluetoothScanner {
 
                 switch (action) {
                     case BluetoothAdapter.ACTION_DISCOVERY_STARTED:
+                        mDevices.clear();
                         mBluetoothScannerListener.onDiscoveryStarted();
                         break;
                     case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
@@ -61,7 +71,23 @@ public class BluetoothScanner {
                     case BluetoothDevice.ACTION_FOUND:
                         BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                         if (device != null) {
+                            Short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
+
+                            MBluetoothDevice foundDevice = new MBluetoothDevice(device.getAddress(), device.getName(), rssi);
+                            boolean isAlreadyInList = false;
+
+                            for(MBluetoothDevice d: mDevices){
+                                if(d.getAddress().equals(foundDevice.getAddress())){
+                                    isAlreadyInList = true;
+                                    break;
+                                }
+                            }
+
+                            if(!isAlreadyInList){
+                                mDevices.add(foundDevice);
+                            }
                             mBluetoothScannerListener.onDeviceFound(device, intent);
+
                         }
                 }
             }

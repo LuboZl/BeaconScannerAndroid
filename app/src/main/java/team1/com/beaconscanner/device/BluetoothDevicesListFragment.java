@@ -1,4 +1,4 @@
-package team1.com.beaconscanner.exhibit;
+package team1.com.beaconscanner.device;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,25 +14,25 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 
 import team1.com.beaconscanner.R;
+import team1.com.beaconscanner.exhibit.Exhibit;
+import team1.com.beaconscanner.exhibit.ExhibitListFragment;
 import team1.com.beaconscanner.overview.ListDataInterface;
 
-public class ExhibitListFragment extends Fragment implements ListDataInterface<Exhibit> {
-    static String TAG = "ExhibitListFragment";
+public class BluetoothDevicesListFragment extends Fragment implements ListDataInterface<MBluetoothDevice> {
+    static String TAG = "BluetoothDevicesListFragment";
 
     private FragmentListener mFragmentListener;
-
     ListView mListView;
     ProgressBar mProgressBar;
 
-    private ExhibitListFragmentAdapter mFragmentAdapter;
-    private ArrayList <Exhibit> mExhibits = new ArrayList<>();
+    private BluetoothDevicesListFragmentAdapter mFragmentAdapter;
+    private ArrayList <MBluetoothDevice> mBluetoothDevices = new ArrayList<>();
 
-    public ExhibitListFragment() {
-        // Required empty public constructor
+    public BluetoothDevicesListFragment() {
     }
 
-    public static ExhibitListFragment newInstance() {
-        ExhibitListFragment fragment = new ExhibitListFragment();
+    public static BluetoothDevicesListFragment newInstance(ArrayList<MBluetoothDevice> devices) {
+        BluetoothDevicesListFragment fragment = new BluetoothDevicesListFragment();
         fragment.setArguments(new Bundle());
         return fragment;
     }
@@ -47,30 +47,29 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG, "onCreateView");
-        View view = inflater.inflate(R.layout.fragment_exhibit_list, container, false);
-        mExhibits = mFragmentListener.getExhibits();
+        View view = inflater.inflate(R.layout.fragment_devices_list, container, false);
+        mBluetoothDevices = mFragmentListener.getBluetoothDevices();
 
-        mListView = (ListView) view.findViewById(R.id.exhibit_list);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.exhibit_loader);
+        mListView= (ListView) view.findViewById(R.id.bluetooth_devics_list);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.devices_loader);
 
-        mFragmentAdapter = new ExhibitListFragmentAdapter(getActivity(), R.layout.fragment_exhibit_row, mExhibits);
+        mFragmentAdapter = new BluetoothDevicesListFragmentAdapter(getActivity(), R.layout.fragment_devices_row, mBluetoothDevices);
         mListView.setAdapter(mFragmentAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Exhibit exhibit = mExhibits.get(position);
-                mFragmentListener.onExhibitItemClick(exhibit);
+                MBluetoothDevice device = mBluetoothDevices.get(position);
+                mFragmentListener.onBluetoothDeviceItemClick(device);
             }
         });
 
         setVisibilities();
-
         return view;
     }
 
     private void setVisibilities(){
-        if(mExhibits.size() == 0){
+        if(mBluetoothDevices.size() == 0){
             mListView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             return;
@@ -91,7 +90,6 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
             throw new RuntimeException(context.toString()
                     + " must implement FragmentListener");
         }
-
     }
 
     @Override
@@ -101,30 +99,17 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
     }
 
     @Override
-    public void onDataUpdated(ArrayList<Exhibit> exhibits) {
+    public void onDataUpdated(ArrayList<MBluetoothDevice> devices) {
         Log.d(TAG, "onDataUpdated");
-
-        mExhibits = exhibits;
-        mFragmentAdapter.updateData(exhibits);
+        mBluetoothDevices = devices;
+        mFragmentAdapter.updateData(devices);
         mFragmentAdapter.notifyDataSetChanged();
         setVisibilities();
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface FragmentListener {
-        ArrayList<Exhibit> getExhibits();
-        void onExhibitItemClick(Exhibit e);
+        ArrayList<MBluetoothDevice> getBluetoothDevices();
+        void onBluetoothDeviceItemClick(MBluetoothDevice e);
     }
-
 
 }

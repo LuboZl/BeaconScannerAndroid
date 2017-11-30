@@ -12,20 +12,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import team1.com.beaconscanner.device.BluetoothDevicesListFragment;
 import team1.com.beaconscanner.exhibit.Exhibit;
 import team1.com.beaconscanner.exhibit.ExhibitListFragment;
+import team1.com.beaconscanner.overview.ExhibitOverviewFragment;
+import team1.com.beaconscanner.device.MBluetoothDevice;
 
-public class MainActivity extends AppCompatActivity implements ExhibitListFragment.OnExhibitListFragmentListener{
+public class MainActivity extends AppCompatActivity
+        implements
+        ExhibitListFragment.FragmentListener,
+        BluetoothDevicesListFragment.FragmentListener {
+
+
+
     private ExhibitFirebase mExhibitFirebase;
     private BluetoothScanner mBluetoothScanner;
     private String TAG = "MainActivity";
-    private String EXH_LIST_FRAGMENT_TAG = "EXH_LIST_FRAGMENT_TAG";
+    private String OVERVIEW_FRAGMENT = "OVERVIEW_FRAGMENT";
+
     private FragmentManager.OnBackStackChangedListener mOnBackStackChangedListener;
 
     public View mFragmentHolder;
 
     public ArrayList<Exhibit> mExhibits = new ArrayList<>();
     public ArrayList<Exhibit> mFoundExhibits = new ArrayList<>();
+    public ArrayList<MBluetoothDevice> mMBluetoothDevices = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
             }
         });
 
-        setExhibitListFragment();
+        setExhibitOverviewFragment();
     }
 
     @Override
@@ -81,8 +92,24 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
         };
     }
 
+    public void filterFoundExhibits(){
+        mFoundExhibits = new ArrayList<>();
+
+        for(MBluetoothDevice device: mMBluetoothDevices){
+            for(Exhibit exhibit: mExhibits){
+                if(device.getAddress().equals(exhibit.getAddress())){
+                    exhibit.setRssi(device.getRssi());
+                    mFoundExhibits.add(exhibit);
+                }
+            }
+        }
+
+
+    }
+
     private BluetoothScanner.BluetoothScannerListener getBluetoothScannerListener() {
         return new BluetoothScanner.BluetoothScannerListener() {
+
             @Override
             public void onDeviceNotSupported() {
                 Log.d(TAG, "onDeviceNotSupported");
@@ -95,29 +122,25 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
 
             @Override
             public void onDiscoveryFinished() {
-                ExhibitListFragment exhibitListFragment = (ExhibitListFragment) getSupportFragmentManager().findFragmentByTag(EXH_LIST_FRAGMENT_TAG);
+                Log.d(TAG, "onDiscoveryFinished");
+
+                ExhibitOverviewFragment exhibitOverviewFragment = (ExhibitOverviewFragment) getSupportFragmentManager().findFragmentByTag(OVERVIEW_FRAGMENT);
 
                 Collections.sort(mFoundExhibits, new RssiComparator());
 
-                if (exhibitListFragment != null) {
-                    exhibitListFragment.onDataUpdated(mFoundExhibits);
-                }
+                if (exhibitOverviewFragment != null) {
+                    mMBluetoothDevices = new ArrayList<>(mBluetoothScanner.getDevices());
 
-                mFoundExhibits.clear();
+                    filterFoundExhibits();
+                    Collections.sort(mFoundExhibits, new RssiComparator());
+
+                    updateFragmentOverviewData();
+                }
             }
 
             @Override
             public void onDeviceFound(BluetoothDevice device, Intent intent) {
-                Exhibit foundExhibit = getExhibit(device.getAddress());
-
-                if (foundExhibit != null) {
-                    Short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
-                    foundExhibit.setRssi(rssi);
-                    mFoundExhibits.add(foundExhibit);
-                }
-                else{
-                //    mExhibitFirebase.add(new Exhibit(null,device.getName(), "test", "", device.getAddress()));
-                }
+                Log.d(TAG, "onDeviceFound");
             }
         };
     }
@@ -127,11 +150,7 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
             @Override
             public void onDataChange(ArrayList<Exhibit> exhibits) {
                 mExhibits = exhibits;
-                ExhibitListFragment exhibitListFragment = (ExhibitListFragment) getSupportFragmentManager().findFragmentByTag(EXH_LIST_FRAGMENT_TAG);
-
-                if (exhibitListFragment != null) {
-                    exhibitListFragment.onDataUpdated(mExhibits);
-                }
+                updateFragmentOverviewData();
             }
 
             @Override
@@ -141,13 +160,18 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
         };
     }
 
-    private void setExhibitListFragment() {
-        ExhibitListFragment exhibitListFragment = ExhibitListFragment.newInstance(mExhibits);
+    private void updateFragmentOverviewData(){
+        ExhibitOverviewFragment overviewFragment = (ExhibitOverviewFragment) getSupportFragmentManager().findFragmentByTag(OVERVIEW_FRAGMENT);
 
-        exhibitListFragment.setArguments(new Bundle());
+        if (overviewFragment != null) {
+            overviewFragment.onDataUpdated(mMBluetoothDevices, mFoundExhibits);
+        }
+    }
+
+    private void setExhibitOverviewFragment() {
+        ExhibitOverviewFragment overviewFragment = ExhibitOverviewFragment.newInstance(mExhibits, mMBluetoothDevices);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_holder, exhibitListFragment, EXH_LIST_FRAGMENT_TAG)
-                .addToBackStack(EXH_LIST_FRAGMENT_TAG)
+                .replace(R.id.fragment_holder, overviewFragment, OVERVIEW_FRAGMENT)
                 .commit();
     }
 
@@ -157,8 +181,12 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
     }
 
     @Override
+    public ArrayList<Exhibit> getExhibits() {
+        return mFoundExhibits;
+    }
+
+    @Override
     public void onExhibitItemClick(Exhibit exhibit) {
-    //    TODO: CEZ FRAGMENT
         Intent intent = new Intent(this, PreviewExhibit.class);
         intent.putExtra("exhibit", exhibit);
 
@@ -174,6 +202,17 @@ public class MainActivity extends AppCompatActivity implements ExhibitListFragme
 
         return null;
     }
+
+    @Override
+    public ArrayList<MBluetoothDevice> getBluetoothDevices() {
+        return mMBluetoothDevices;
+    }
+
+    @Override
+    public void onBluetoothDeviceItemClick(MBluetoothDevice e) {
+
+    }
+
 
     public class RssiComparator implements Comparator<Exhibit> {
         @Override
