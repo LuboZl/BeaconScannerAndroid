@@ -104,6 +104,10 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
     public void onDataUpdated(ArrayList<Exhibit> exhibits) {
         Log.d(TAG, "onDataUpdated");
 
+        if(mFragmentAdapter == null){
+            return;
+        }
+
         mExhibits = exhibits;
         mFragmentAdapter.updateData(exhibits);
         mFragmentAdapter.notifyDataSetChanged();
