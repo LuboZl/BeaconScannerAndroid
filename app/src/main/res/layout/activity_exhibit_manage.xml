@@ -73,22 +73,31 @@
         android:textColor="#FFFFFF"
         android:text="@string/add_exhibit" />
 
-    <Button
-        android:id="@+id/edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/edit_exhibit"
-        android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/remove"
+    <LinearLayout
+        android:id="@+id/edit_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@android:color/holo_red_light"
-        android:text="@string/remove_exhibit"
-        android:textColor="#FFFFFF" />
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/edit"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:layout_marginRight="7dp"
+            android:text="@string/edit_exhibit"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/remove"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:background="@android:color/holo_red_light"
+            android:text="@string/remove_exhibit"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
 
 </LinearLayout>

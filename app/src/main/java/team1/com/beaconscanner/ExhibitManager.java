@@ -143,10 +143,7 @@ public class ExhibitManager extends AppCompatActivity {
 
     private void hideUnusedButtons() {
         if (isEdit) addButton.setVisibility(View.GONE);
-        else {
-            editButton.setVisibility(View.GONE);
-            removeButton.setVisibility(View.GONE);
-        }
+        else findViewById(R.id.edit_section).setVisibility(View.GONE);
     }
 
     private void fillActivityFields() {
