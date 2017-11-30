@@ -8,8 +8,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,9 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity  android:screenOrientation="portrait" android:name=".AddExhibit" />
-        <activity  android:screenOrientation="portrait" android:name=".EditExhibit" />
-        <activity  android:screenOrientation="portrait" android:name=".PreviewExhibit"></activity>
+        <activity  android:screenOrientation="portrait" android:name=".PreviewExhibit" />
+        <activity  android:screenOrientation="portrait" android:name=".ExhibitManager" />
     </application>
-
 </manifest>

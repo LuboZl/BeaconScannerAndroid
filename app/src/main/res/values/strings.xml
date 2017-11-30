@@ -1,42 +1,32 @@
 <resources>
     <string name="app_name">BeaconScanner</string>
 
-    <!--activity_add_exhibit-->
-    <string name="add_exhibit_name">Názov exponátu</string>
-    <string name="add_exhibit_about">Popis</string>
-    <string name="add_exhibit_id">Beacon ID</string>
-    <string name="add_exhibit_choose_image">Vybrať fotku</string>
-    <string name="add_exhibit_image">Obrázok exponátu</string>
-    <string name="add_exhibit_save">Pridať nový exponát</string>
-    <!--activity_edit_exhibit-->
-    <string name="edit_exhibit_name">Názov exponátu</string>
-    <string name="edit_exhibit_about">Popis</string>
-    <string name="edit_exhibit_id">Beacon ID</string>
-    <string name="edit_exhibit_choose_image">Vybrať novú fotku</string>
-    <string name="edit_exhibit_image">Obrázok exponátu</string>
-    <string name="edit_exhibit_save">Uložiť zmeny</string>
-    <string name="edit_exhibit_delete">Zmazať exponát</string>
+    <!--activity_exhibit_manage-->
+    <string name="exhibit_name">Názov exponátu</string>
+    <string name="exhibit_about">Popis</string>
+    <string name="exhibit_id">Beacon ID</string>
+    <string name="exhibit_beacon">Vybrať Beacon</string>
+    <string name="exhibit_beacon_title">Vyberte Beacon</string>
+    <string name="exhibit_choose_image">Vybrať fotku</string>
+    <string name="exhibit_permission">Výber obrázku z galérie</string>
+    <string name="exhibit_image">Obrázok exponátu</string>
+    <string name="exhibit_image_upload">Prebieha nahrávanie</string>
+    <string name="exhibit_upload_done">Upload sa skončil</string>
+    <string name="exhibit_validation_name">Zadajte názov exponátu.</string>
+    <string name="exhibit_validation_about">Zadajte popis exponátu.</string>
+    <string name="exhibit_validation_id">Zadajte adresu beaconu.</string>
+    <string name="exhibit_validation_image">Zadajte obrázok exponátu.</string>
+    <string name="add_exhibit">Pridať exponát</string>
+    <string name="exhibit_saved">Exponát bol uložený.</string>
+    <string name="edit_exhibit">Upraviť exponát</string>
+    <string name="exhibit_edited">Exponát bol upravený.</string>
+    <string name="remove_exhibit">Zmazať exponát</string>
+    <string name="exhibit_removed">Exponát bol zmazaný</string>
+
     <!--activity_preview_exhibit-->
     <string name="preview_exhibit_name">Názov exponátu</string>
     <string name="preview_exhibit_about">Popis</string>
     <string name="preview_exhibit_image">Obrázok exponátu</string>
-    <!--EditExhibit.java-->
-    <string name="editExhibit_uploading">Uploadujem ...</string>
-    <string name="editExhibit_upload_done">Upload skončil</string>
-    <string name="editExhibit_validation_name">Zadajte názov exponátu.</string>
-    <string name="editExhibit_validation_about">Zadajte popis exponátu.</string>
-    <string name="editExhibit_validation_id">Zadajte adresu beaconu.</string>
-    <string name="editExhibit_validation_image">Zadajte obrázok exponátu.</string>
-    <string name="editExhibit_saved">Exponát uloŽený.</string>
-
-    <!--addExhibit.java-->
-    <string name="addExhibit_uploading">Uploadujem ...</string>
-    <string name="addExhibit_upload_done">Upload skončil</string>
-    <string name="addExhibit_validation_name">Zadajte názov exponátu.</string>
-    <string name="addExhibit_validation_about">Zadajte popis exponátu.</string>
-    <string name="addExhibit_validation_id">Zadajte adresu beaconu.</string>
-    <string name="addExhibit_validation_image">Zadajte obrázok exponátu.</string>
-    <string name="addExhibit_saved">Exponát uloŽený.</string>
 
     <!--fragment_exhibit-->
     <string name="fragment_exhibit_image">Obrázok exponátu</string>
@@ -44,9 +34,4 @@
     <string name="fragment_exhibit_row_about">Popis</string>
     <string name="fragment_exhibit_info">Približná zdialenosť od vás: X m</string>
 
-
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

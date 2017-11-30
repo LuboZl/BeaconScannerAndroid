@@ -3,7 +3,6 @@ package team1.com.beaconscanner;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -24,13 +23,10 @@ public class MainActivity extends AppCompatActivity
         BluetoothDevicesListFragment.FragmentListener {
 
 
-
     private ExhibitFirebase mExhibitFirebase;
     private BluetoothScanner mBluetoothScanner;
     private String TAG = "MainActivity";
     private String OVERVIEW_FRAGMENT = "OVERVIEW_FRAGMENT";
-
-    private FragmentManager.OnBackStackChangedListener mOnBackStackChangedListener;
 
     public View mFragmentHolder;
 
@@ -45,15 +41,18 @@ public class MainActivity extends AppCompatActivity
 
         mFragmentHolder = findViewById(R.id.fragment_holder);
 
-        mOnBackStackChangedListener = getOnBackStackChangedListener();
-
         mExhibitFirebase = new ExhibitFirebase(getExhibitFirebaseListener());
         mBluetoothScanner = new BluetoothScanner(this, getBluetoothScannerListener());
 
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), AddExhibit.class));
+                Intent intent = new Intent(getBaseContext(), ExhibitManager.class);
+
+                intent.putExtra("edit", false);
+                intent.putExtra("exhibit", new Exhibit());
+
+                startActivity(intent);
             }
         });
 
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == BluetoothScanner.REQUEST_ENABLE_BLUETOOTH) {
-            switch (resultCode){
+            switch (resultCode) {
                 case RESULT_OK:
                     mBluetoothScanner.initBluetoothScanner();
                     break;
@@ -82,27 +81,15 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
     }
 
-
-    private FragmentManager.OnBackStackChangedListener getOnBackStackChangedListener() {
-        return new FragmentManager.OnBackStackChangedListener() {
-            @Override
-            public void onBackStackChanged() {
-
-            }
-        };
-    }
-
-    public void filterFoundExhibits(){
-        for(MBluetoothDevice device: mMBluetoothDevices){
-            for(Exhibit exhibit: mExhibits){
-                if(device.getAddress().equals(exhibit.getAddress())){
+    public void filterFoundExhibits() {
+        for (MBluetoothDevice device : mMBluetoothDevices) {
+            for (Exhibit exhibit : mExhibits) {
+                if (device.getAddress().equals(exhibit.getAddress())) {
                     exhibit.setRssi(device.getRssi());
                     mFoundExhibits.add(exhibit);
                 }
             }
         }
-
-
     }
 
     private BluetoothScanner.BluetoothScannerListener getBluetoothScannerListener() {
@@ -160,7 +147,7 @@ public class MainActivity extends AppCompatActivity
         };
     }
 
-    private void updateFragmentOverviewData(){
+    private void updateFragmentOverviewData() {
         ExhibitOverviewFragment overviewFragment = (ExhibitOverviewFragment) getSupportFragmentManager().findFragmentByTag(OVERVIEW_FRAGMENT);
 
         if (overviewFragment != null) {
@@ -193,16 +180,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public Exhibit getExhibit(String adress) {
-        for (Exhibit e: mExhibits) {
-            if (adress.equals(e.getAddress())) {
-                return e;
-            }
-        }
-
-        return null;
-    }
-
     @Override
     public ArrayList<MBluetoothDevice> getBluetoothDevices() {
         return mMBluetoothDevices;
@@ -213,12 +190,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
     public class RssiComparator implements Comparator<Exhibit> {
         @Override
         public int compare(Exhibit obj1, Exhibit obj2) {
             return obj2.getRssi() - obj1.getRssi();
-
         }
     }
 }
