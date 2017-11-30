@@ -12,7 +12,6 @@ import team1.com.beaconscanner.exhibit.Exhibit;
 
 public class ExhibitFirebase {
     private DatabaseReference mPreviewsRef;
-
     public ExhibitFirebase(final ExhibitFirebaseListener exhibitFirebaseListener) {
         mPreviewsRef = FirebaseDatabase.getInstance().getReference("dev_previews");
 

@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     public View mFragmentHolder;
 
-    public ArrayList<Exhibit> mExhibits = new ArrayList<>();
+    public ArrayList<Exhibit> mAllExhibits = new ArrayList<>();
     public ArrayList<Exhibit> mFoundExhibits = new ArrayList<>();
     public ArrayList<MBluetoothDevice> mMBluetoothDevices = new ArrayList<>();
 
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
 
     public void filterFoundExhibits(){
         for(MBluetoothDevice device: mMBluetoothDevices){
-            for(Exhibit exhibit: mExhibits){
+            for(Exhibit exhibit: mAllExhibits){
                 if(device.getAddress().equals(exhibit.getAddress())){
                     exhibit.setRssi(device.getRssi());
                     mFoundExhibits.add(exhibit);
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(ArrayList<Exhibit> exhibits) {
                 //mozno to je lepie ako posuvat referencie - zistujem preco data zmiznu niekedy
-                mExhibits = new ArrayList<>(exhibits);
+                mAllExhibits = new ArrayList<>(exhibits);
                 updateFragmentOverviewData();
             }
 
@@ -164,12 +164,12 @@ public class MainActivity extends AppCompatActivity
         ExhibitOverviewFragment overviewFragment = (ExhibitOverviewFragment) getSupportFragmentManager().findFragmentByTag(OVERVIEW_FRAGMENT);
 
         if (overviewFragment != null) {
-            overviewFragment.onDataUpdated(mMBluetoothDevices, mFoundExhibits);
+            overviewFragment.onDataUpdated(mFoundExhibits, mMBluetoothDevices, mAllExhibits);
         }
     }
 
     private void setExhibitOverviewFragment() {
-        ExhibitOverviewFragment overviewFragment = ExhibitOverviewFragment.newInstance(mExhibits, mMBluetoothDevices);
+        ExhibitOverviewFragment overviewFragment = ExhibitOverviewFragment.newInstance(mFoundExhibits, mMBluetoothDevices, mAllExhibits);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_holder, overviewFragment, OVERVIEW_FRAGMENT)
                 .commit();
@@ -179,11 +179,11 @@ public class MainActivity extends AppCompatActivity
     public void onBluetoothNotRunning() {
         Log.d(TAG, "onBluetoothNotRunning");
     }
-
-    @Override
-    public ArrayList<Exhibit> getExhibits() {
-        return mFoundExhibits;
-    }
+//
+//    @Override
+//    public ArrayList<Exhibit> getFoundExhibits() {
+//        return mFoundExhibits;
+//    }
 
     @Override
     public void onExhibitItemClick(Exhibit exhibit) {
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public Exhibit getExhibit(String adress) {
-        for (Exhibit e: mExhibits) {
+        for (Exhibit e: mAllExhibits) {
             if (adress.equals(e.getAddress())) {
                 return e;
             }

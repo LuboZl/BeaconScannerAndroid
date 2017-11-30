@@ -37,6 +37,13 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
         return fragment;
     }
 
+    public static ExhibitListFragment newInstance(ArrayList<Exhibit> exhibits) {
+        ExhibitListFragment fragment = new ExhibitListFragment();
+        fragment.mExhibits = exhibits;
+        fragment.setArguments(new Bundle());
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +55,7 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
         // Inflate the layout for this fragment
         Log.d(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_exhibit_list, container, false);
-        mExhibits = mFragmentListener.getExhibits();
+//        mExhibits = mFragmentListener.getFoundExhibits();
 
         mListView = (ListView) view.findViewById(R.id.exhibit_list);
         mProgressBar = (ProgressBar) view.findViewById(R.id.exhibit_loader);
@@ -103,12 +110,12 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
     @Override
     public void onDataUpdated(ArrayList<Exhibit> exhibits) {
         Log.d(TAG, "onDataUpdated");
+        mExhibits = exhibits;
 
         if(mFragmentAdapter == null){
             return;
         }
 
-        mExhibits = exhibits;
         mFragmentAdapter.updateData(exhibits);
         mFragmentAdapter.notifyDataSetChanged();
         setVisibilities();
@@ -126,7 +133,6 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface FragmentListener {
-        ArrayList<Exhibit> getExhibits();
         void onExhibitItemClick(Exhibit e);
     }
 

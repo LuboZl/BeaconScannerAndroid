@@ -101,12 +101,13 @@ public class BluetoothDevicesListFragment extends Fragment implements ListDataIn
     @Override
     public void onDataUpdated(ArrayList<MBluetoothDevice> devices) {
         Log.d(TAG, "onDataUpdated");
-        
+
+        mBluetoothDevices = devices;
+
         if(mFragmentAdapter == null){
             return;
         }
 
-        mBluetoothDevices = devices;
         mFragmentAdapter.updateData(devices);
         mFragmentAdapter.notifyDataSetChanged();
         setVisibilities();
