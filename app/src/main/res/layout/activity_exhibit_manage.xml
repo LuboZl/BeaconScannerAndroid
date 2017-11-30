@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    tools:context="team1.com.beaconscanner.EditExhibit"
     android:orientation="vertical">
 
     <EditText
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/edit_exhibit_name"/>
+        android:hint="@string/exhibit_name"/>
 
     <EditText
         android:id="@+id/about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="@string/edit_exhibit_about"
+        android:hint="@string/exhibit_about"
         android:selectAllOnFocus="false"
         android:singleLine="false" />
 
-    <EditText
-        android:id="@+id/address"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="@string/edit_exhibit_id" />
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/exhibit_id" />
+
+        <Button
+            android:id="@+id/button_beacon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/exhibit_beacon" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_image"
@@ -37,15 +54,24 @@
         android:textColor="#FFFFFF"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="@string/edit_exhibit_choose_image" />
+        android:text="@string/exhibit_choose_image" />
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
-        android:contentDescription="@string/edit_exhibit_image"
+        android:contentDescription="@string/exhibit_image"
         android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFFFFF"
+        android:text="@string/add_exhibit" />
 
     <Button
         android:id="@+id/edit"
@@ -53,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@color/colorPrimary"
-        android:text="@string/edit_exhibit_save"
+        android:text="@string/edit_exhibit"
         android:textColor="#FFFFFF" />
 
     <Button
@@ -62,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:background="@android:color/holo_red_light"
-        android:text="@string/edit_exhibit_delete"
+        android:text="@string/remove_exhibit"
         android:textColor="#FFFFFF" />
 
 </LinearLayout>
