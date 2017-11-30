@@ -27,6 +27,11 @@ import pub.devrel.easypermissions.EasyPermissions;
 import team1.com.beaconscanner.exhibit.Exhibit;
 
 public class AddExhibit extends AppCompatActivity {
+
+//    TODO: vieme zobrazit loader pri nacitavani obrazka?
+//    TODO: vieme pouzit rovnaku aktivitu ako pre edit?
+//    TODO: zoznam devicov - tj nevkladat to id rucne?
+
     private ExhibitFirebase exhibitFirebase;
     private EditText titleEditText;
     private EditText aboutEditText;

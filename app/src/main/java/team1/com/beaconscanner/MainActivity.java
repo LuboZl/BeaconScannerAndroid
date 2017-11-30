@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity
                 if (exhibitOverviewFragment != null) {
                     mMBluetoothDevices = new ArrayList<>(mBluetoothScanner.getDevices());
                     mFoundExhibits = new ArrayList<>();
-                    
+
                     filterFoundExhibits();
                     Collections.sort(mFoundExhibits, new RssiComparator());
 
@@ -148,7 +148,8 @@ public class MainActivity extends AppCompatActivity
         return new ExhibitFirebase.ExhibitFirebaseListener() {
             @Override
             public void onDataChange(ArrayList<Exhibit> exhibits) {
-                mExhibits = exhibits;
+                //mozno to je lepie ako posuvat referencie - zistujem preco data zmiznu niekedy
+                mExhibits = new ArrayList<>(exhibits);
                 updateFragmentOverviewData();
             }
 

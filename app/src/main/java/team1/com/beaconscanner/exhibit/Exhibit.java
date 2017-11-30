@@ -100,4 +100,11 @@ public class Exhibit implements Parcelable {
             return new Exhibit[size];
         }
     };
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return new Exhibit(
+                this.getId(), this.getTitle(), this.getAbout(), this.getImagePath(), this.getAddress()
+        );
+    }
 }

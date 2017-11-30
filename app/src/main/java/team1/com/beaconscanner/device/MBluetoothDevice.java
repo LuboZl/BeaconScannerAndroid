@@ -9,6 +9,10 @@ public class MBluetoothDevice {
     private String name;
     private Short rssi;
 
+
+    public MBluetoothDevice() {
+    }
+
     public Short getRssi() {
         return rssi;
     }
@@ -39,4 +43,10 @@ public class MBluetoothDevice {
         this.name = name;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return  new MBluetoothDevice(
+              this.getAddress(), this.getName(), this.getRssi()
+        );
+    }
 }

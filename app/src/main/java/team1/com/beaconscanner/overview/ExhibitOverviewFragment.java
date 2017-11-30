@@ -72,7 +72,7 @@ public class ExhibitOverviewFragment extends Fragment {
     }
 
     private void updateFragments(){
-        //TODO: TOTO UPDATUJE IBA AKTUALNY FRAGMENT
+//      TOTO UPDATUJE IBA AKTUALNY FRAGMENT
 //        switch (mViewPager.getCurrentItem()){
 //            case 0:
 //                ExhibitListFragment exhibitExhibitListFragment = (ExhibitListFragment) mViewPager.getAdapter().instantiateItem(mViewPager, mViewPager.getCurrentItem());
@@ -85,9 +85,11 @@ public class ExhibitOverviewFragment extends Fragment {
 //
 //        }
 
-//        TODO TOTO UPDATUJE VSETKY OBA FRAGMENTY
+//      TOTO UPDATUJE OBA FRAGMENTY (asi horsia volba, ale data sa naplnaju aj bez toho aby bolo viditelne)
+
         ExhibitListFragment exhibitExhibitListFragment = (ExhibitListFragment) mViewPager.getAdapter().instantiateItem(mViewPager, 0);
         exhibitExhibitListFragment.onDataUpdated(mFoundExhibits);
+
         BluetoothDevicesListFragment bluetoothDevicesListFragment =
                 (BluetoothDevicesListFragment) mViewPager.getAdapter().instantiateItem(mViewPager, 1);
         bluetoothDevicesListFragment.onDataUpdated(mMBluetoothDevices);
