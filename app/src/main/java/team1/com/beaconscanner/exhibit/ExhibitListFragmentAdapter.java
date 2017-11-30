@@ -15,16 +15,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import team1.com.beaconscanner.BluetoothScanner;
-import team1.com.beaconscanner.ExhibitFirebase;
-import team1.com.beaconscanner.ExhibitListDataInterface;
-import team1.com.beaconscanner.MainActivity;
-import team1.com.beaconscanner.PreviewExhibit;
-import team1.com.beaconscanner.R;
 
-/**
- * Created by jan on 11/25/17.
- */
+import team1.com.beaconscanner.R;
 
 public class ExhibitListFragmentAdapter extends ArrayAdapter<Exhibit> {
     Context context;

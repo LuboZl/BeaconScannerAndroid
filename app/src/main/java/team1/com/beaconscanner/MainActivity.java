@@ -93,8 +93,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void filterFoundExhibits(){
-        mFoundExhibits = new ArrayList<>();
-
         for(MBluetoothDevice device: mMBluetoothDevices){
             for(Exhibit exhibit: mExhibits){
                 if(device.getAddress().equals(exhibit.getAddress())){
@@ -130,7 +128,8 @@ public class MainActivity extends AppCompatActivity
 
                 if (exhibitOverviewFragment != null) {
                     mMBluetoothDevices = new ArrayList<>(mBluetoothScanner.getDevices());
-
+                    mFoundExhibits = new ArrayList<>();
+                    
                     filterFoundExhibits();
                     Collections.sort(mFoundExhibits, new RssiComparator());
 
