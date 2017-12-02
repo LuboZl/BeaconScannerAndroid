@@ -69,7 +69,7 @@ public class Exhibit implements Parcelable {
         int rssi_very_close = 50;
         int rssi_close = 65;
         int rssi_not_close = 80;
-        if(this.rssi == 0) return "";
+        if(this.rssi == 0) return "Not available";
         else if(-this.rssi <= rssi_very_close) return "Distance: very close";
         else if(-this.rssi <= rssi_close) return "Distance: close";
         else if(-this.rssi <= rssi_not_close) return "Distance: a little further";
