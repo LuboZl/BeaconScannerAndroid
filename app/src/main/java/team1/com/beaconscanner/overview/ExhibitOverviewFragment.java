@@ -12,6 +12,7 @@ import android.support.design.widget.BottomNavigationView;
 
 import java.util.ArrayList;
 
+import team1.com.beaconscanner.MainActivity;
 import team1.com.beaconscanner.R;
 import team1.com.beaconscanner.device.BluetoothDevicesListFragment;
 import team1.com.beaconscanner.device.MBluetoothDevice;
@@ -20,9 +21,9 @@ import team1.com.beaconscanner.exhibit.ExhibitListFragment;
 
 public class ExhibitOverviewFragment extends Fragment {
     BottomNavigationView mBottomNavigationView;
-    String BLUETOOTH_DEVICES_FRAGMENT = "BLUETOOTH_DEVICES_FRAGMENT";
-    String FOUND_EXHIBIT_FRAGMENT = "FOUND_EXHIBIT_FRAGMENT";
-    String ALL_EXHIBITS_FRAGMENT = "ALL_EXHIBITS_FRAGMENT";
+    final String BLUETOOTH_DEVICES_FRAGMENT = "BLUETOOTH_DEVICES_FRAGMENT";
+    final String FOUND_EXHIBIT_FRAGMENT = "FOUND_EXHIBIT_FRAGMENT";
+    final String ALL_EXHIBITS_FRAGMENT = "ALL_EXHIBITS_FRAGMENT";
 
     private ArrayList<Exhibit> mFoundExhibits = new ArrayList<>();
     private ArrayList<Exhibit> mAllExhibits = new ArrayList<>();
@@ -97,11 +98,25 @@ public class ExhibitOverviewFragment extends Fragment {
         };
     }
 
+    public String getTitle(String TAG){
+        switch (TAG){
+            case FOUND_EXHIBIT_FRAGMENT:
+                return getString(R.string.fragment_overview_visible_exhibits);
+            case BLUETOOTH_DEVICES_FRAGMENT:
+                return getString(R.string.fragment_overview_visible_devices);
+            case ALL_EXHIBITS_FRAGMENT:
+                return getString(R.string.fragment_overview_all_exhibits);
+        }
+
+        return getString(R.string.app_name);
+
+    }
     private void setNewFragment(String TAG) {
         ft = getChildFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_overview_content, mCurrentFragment, TAG);
         ft.addToBackStack(null);
         ft.commit();
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(getTitle(TAG));
     }
 
     public void onDataUpdated(ArrayList<Exhibit> foundExhibits, ArrayList<MBluetoothDevice> bluetoothDevices, ArrayList<Exhibit> allExhibits) {

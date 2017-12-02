@@ -24,6 +24,8 @@
     <string name="exhibit_validation_id">Zadajte adresu beaconu.</string>
     <string name="exhibit_validation_image">Zadajte obrázok exponátu.</string>
     <string name="add_exhibit">Pridať exponát</string>
+    <string name="title_add_exhibit">Nový exponát</string>
+    <string name="title_edit_exhibit">Úprava exponátu</string>
     <string name="exhibit_saved">Exponát bol uložený.</string>
     <string name="edit_exhibit">Upraviť exponát</string>
     <string name="exhibit_edited">Exponát bol upravený.</string>
@@ -48,5 +50,11 @@
 
     <!--BluetoothDevicesListFragmentAdapter-->
     <string name="devices_rssi">RSSI</string>
+
+    <!--Overview fragment Menu-->
+    <string name="fragment_overview_visible_exhibits">Exponáty v okolí</string>
+    <string name="fragment_overview_visible_devices">Viditeľné zariadenia</string>
+    <string name="fragment_overview_all_exhibits">Všetky exponáty</string>
+
 
 </resources>

@@ -59,6 +59,12 @@ public class ExhibitManager extends AppCompatActivity {
         hideUnusedButtons();
         if (isEdit) fillActivityFields();
 
+        if (isEdit) {
+            getSupportActionBar().setTitle(getString(R.string.title_edit_exhibit));
+        } else {
+            getSupportActionBar().setTitle(getString(R.string.title_add_exhibit));
+        }
+
         findViewById(R.id.button_beacon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

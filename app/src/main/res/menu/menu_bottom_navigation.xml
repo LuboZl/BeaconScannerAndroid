@@ -3,15 +3,15 @@
     <item
         android:id="@+id/menu_found_exhibits"
         android:icon="@drawable/ic_bluetooth_connected_black_24dp"
-        android:title="Visible exhibits" />
+        android:title="@string/fragment_overview_visible_exhibits" />
 
     <item
         android:id="@+id/menu_bluetooth"
         android:icon="@drawable/ic_bluetooth_searching_black_24dp"
-        android:title="Bluetooth devices" />
+        android:title="@string/fragment_overview_visible_devices" />
 
     <item
         android:id="@+id/menu_all_exhibits"
         android:icon="@drawable/ic_save_black_24dp"
-        android:title="All exhibits" />
+        android:title="@string/fragment_overview_all_exhibits" />
 </menu>

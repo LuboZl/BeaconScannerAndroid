@@ -18,6 +18,6 @@
         android:layout_height="wrap_content"
         app:itemIconTint="@drawable/drawer_item"
         app:itemTextColor="@drawable/drawer_item"
-        app:itemBackground="@android:color/transparent"
+        app:itemBackground="@android:color/white"
         app:menu="@menu/menu_bottom_navigation" />
 </FrameLayout>
