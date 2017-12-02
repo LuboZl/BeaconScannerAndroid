@@ -34,15 +34,15 @@ public class MainActivity extends AppCompatActivity
     public ArrayList<Exhibit> mFoundExhibits = new ArrayList<>();
     public ArrayList<MBluetoothDevice> mMBluetoothDevices = new ArrayList<>();
 
+//    TODO: Naplnit ten list viditelnych beaconov v ExhibitManagerovi
 //    TODO: ADD BUTTON DO ACTION BARU - alebo aspon vyssie
 //    TODO: NASTAVIT IKONY TABOV, Background na biely pri taboch
-//    TODO: mensie obrazky na upload - strasne dlho trva na citanie
 //    TODO: stringy dat do strings.xml
+//    TODO: mensie obrazky na upload - strasne dlho trva nacitanie
+//    TODO: ProgressBaru - loader dat margin na vrch nejaky
 //    TODO: Text ze nie je viditelny namiesto ""
 //    TODO: Farebne texty podla vzdialenosti? zelena, oranzova..
-//    TODO: ProgressBaru - loader dat margin na vrch nejaky
 //    TODO: Mozno zmenit tie hlavne farby v colors.xml?
-//    TODO: Naplnit ten list viditelnych beaconov v ExhibitManagerovi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
