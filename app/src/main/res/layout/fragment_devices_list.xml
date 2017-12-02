@@ -5,6 +5,7 @@
     <ProgressBar
         android:layout_gravity="center"
         android:visibility="visible"
+        android:layout_marginTop="50dp"
         android:id="@+id/devices_loader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

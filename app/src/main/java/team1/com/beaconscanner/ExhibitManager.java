@@ -2,10 +2,13 @@ package team1.com.beaconscanner;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -79,6 +82,7 @@ public class ExhibitManager extends AppCompatActivity {
         findViewById(R.id.button_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (EasyPermissions.hasPermissions(ExhibitManager.this, galleryPermissions)) {
                     Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
