@@ -78,7 +78,7 @@ public class ExhibitListFragmentAdapter extends ArrayAdapter<Exhibit> {
 
 
 
-        holder.exhibit_distance.setText("Rssi: "+exhibit.getRssi());
+        holder.exhibit_distance.setText(exhibit.getDistanceInfo());
 
         return row;
     }
