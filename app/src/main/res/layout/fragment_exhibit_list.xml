@@ -1,17 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="team1.com.beaconscanner.exhibit.ExhibitListFragment">
-
-    <!--<TextView-->
-        <!--android:id="@+id/exhibits_loading"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Loading"/>-->
+    android:layout_height="match_parent">
 
     <ProgressBar
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
         android:visibility="visible"
         android:id="@+id/exhibit_loader"
         android:layout_width="wrap_content"
