@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity
 //    TODO: NASTAVIT IKONY TABOV, Background na biely pri taboch
 //    TODO: stringy dat do strings.xml
 //    TODO: mensie obrazky na upload - strasne dlho trva nacitanie
-//    TODO: Text ze nie je viditelny namiesto ""
+//    DONE: ProgressBaru - loader dat margin na vrch nejaky
+//    DONE: Text ze nie je viditelny namiesto ""
 //    TODO: Farebne texty podla vzdialenosti? zelena, oranzova..
 //    TODO: Mozno zmenit tie hlavne farby v colors.xml?
 
