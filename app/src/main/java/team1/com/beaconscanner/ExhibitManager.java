@@ -154,6 +154,7 @@ public class ExhibitManager extends AppCompatActivity {
         titleEditText.setText(exhibit.getTitle());
         aboutEditText.setText(exhibit.getAbout());
         addressTextView.setText(exhibit.getAddress());
+        imageDownloadPath = Uri.parse(exhibit.getImagePath());
         Picasso.with(ExhibitManager.this)
                 .load( Uri.parse( exhibit.getImagePath() ) )
                 .centerCrop()
