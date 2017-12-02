@@ -22,36 +22,25 @@ public class MainActivity extends AppCompatActivity
         ExhibitListFragment.FragmentListener,
         BluetoothDevicesListFragment.FragmentListener {
 
-
-    private ExhibitFirebase mExhibitFirebase;
     private BluetoothScanner mBluetoothScanner;
     private String TAG = "MainActivity";
     private String OVERVIEW_FRAGMENT = "OVERVIEW_FRAGMENT";
-
-    public View mFragmentHolder;
 
     public ArrayList<Exhibit> mAllExhibits = new ArrayList<>();
     public ArrayList<Exhibit> mFoundExhibits = new ArrayList<>();
     public ArrayList<MBluetoothDevice> mMBluetoothDevices = new ArrayList<>();
 
 //    TODO: Naplnit ten list viditelnych beaconov v ExhibitManagerovi
-//    TODO: ADD BUTTON DO ACTION BARU - alebo aspon vyssie
-//    TODO: NASTAVIT IKONY TABOV, Background na biely pri taboch
-//    TODO: stringy dat do strings.xml
-//    TODO: mensie obrazky na upload - strasne dlho trva nacitanie
-//    DONE: ProgressBaru - loader dat margin na vrch nejaky
-//    DONE: Text ze nie je viditelny namiesto ""
-//    TODO: Farebne texty podla vzdialenosti? zelena, oranzova..
-//    TODO: Mozno zmenit tie hlavne farby v colors.xml?
+//    TODO: mensie obrazky na upload - strasne dlho trva nacitanie - Treba kupit lepsi net :D
+//    TODO: Farebne texty podla vzdialenosti? zelena, oranzova.. - Zbytocne nie?
+//    TODO: Mozno zmenit tie hlavne farby v colors.xml? - Zbytocne nie?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mFragmentHolder = findViewById(R.id.fragment_holder);
-
-        mExhibitFirebase = new ExhibitFirebase(getExhibitFirebaseListener());
+        new ExhibitFirebase(getExhibitFirebaseListener());
         mBluetoothScanner = new BluetoothScanner(this, getBluetoothScannerListener());
 
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
@@ -79,7 +68,7 @@ public class MainActivity extends AppCompatActivity
                     mBluetoothScanner.initBluetoothScanner();
                     break;
                 case RESULT_CANCELED:
-                    onBluetoothNotRunning();
+                    Log.d(TAG, "onBluetoothNotRunning");
                     break;
             }
         }
@@ -145,15 +134,12 @@ public class MainActivity extends AppCompatActivity
         return new ExhibitFirebase.ExhibitFirebaseListener() {
             @Override
             public void onDataChange(ArrayList<Exhibit> exhibits) {
-                //mozno to je lepie ako posuvat referencie - zistujem preco data zmiznu niekedy
                 mAllExhibits = new ArrayList<>(exhibits);
                 updateFragmentOverviewData();
             }
 
             @Override
-            public void onCancelled() {
-
-            }
+            public void onCancelled() { }
         };
     }
 
@@ -172,32 +158,12 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-
-    public void onBluetoothNotRunning() {
-        Log.d(TAG, "onBluetoothNotRunning");
-    }
-//
-//    @Override
-//    public ArrayList<Exhibit> getFoundExhibits() {
-//        return mFoundExhibits;
-//    }
-
     @Override
     public void onExhibitItemClick(Exhibit exhibit) {
         Intent intent = new Intent(this, PreviewExhibit.class);
         intent.putExtra("exhibit", exhibit);
 
         startActivity(intent);
-    }
-
-    public Exhibit getExhibit(String adress) {
-        for (Exhibit e: mAllExhibits) {
-            if (adress.equals(e.getAddress())) {
-                return e;
-            }
-        }
-
-        return null;
     }
 
     @Override

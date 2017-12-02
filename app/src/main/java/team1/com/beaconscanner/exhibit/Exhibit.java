@@ -1,7 +1,11 @@
 package team1.com.beaconscanner.exhibit;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import team1.com.beaconscanner.MainActivity;
+import team1.com.beaconscanner.R;
 
 public class Exhibit implements Parcelable {
     private String id;
@@ -26,6 +30,7 @@ public class Exhibit implements Parcelable {
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -33,6 +38,7 @@ public class Exhibit implements Parcelable {
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -40,6 +46,7 @@ public class Exhibit implements Parcelable {
     public String getAbout() {
         return about;
     }
+
     public void setAbout(String about) {
         this.about = about;
     }
@@ -47,6 +54,7 @@ public class Exhibit implements Parcelable {
     public String getImagePath() {
         return imagePath;
     }
+
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
@@ -54,6 +62,7 @@ public class Exhibit implements Parcelable {
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -61,20 +70,17 @@ public class Exhibit implements Parcelable {
     public int getRssi() {
         return rssi;
     }
+
     public void setRssi(int distance) {
         this.rssi = distance;
     }
 
-    public String getDistanceInfo(){
-        int rssi_very_close = 50;
-        int rssi_close = 65;
-        int rssi_not_close = 80;
-        if(this.rssi == 0) return "Not available";
-        else if(-this.rssi <= rssi_very_close) return "Distance: very close";
-        else if(-this.rssi <= rssi_close) return "Distance: close";
-        else if(-this.rssi <= rssi_not_close) return "Distance: a little further";
-        else return "Distance: far away";
-
+    public String getDistanceInfo(Context context) {
+        if (this.rssi == 0) return context.getString(R.string.distance_unavailable);
+        else if (-this.rssi <= 50) return context.getString(R.string.distance_very_close);
+        else if (-this.rssi <= 65) return context.getString(R.string.distance_close);
+        else if (-this.rssi <= 80) return context.getString(R.string.distance_nearby);
+        else return context.getString(R.string.distance_away);
     }
 
     @Override
@@ -82,9 +88,10 @@ public class Exhibit implements Parcelable {
         return 0;
     }
 
-    public Exhibit(Parcel in){
+    public Exhibit(Parcel in) {
         String[] data = new String[5];
         in.readStringArray(data);
+
         this.setId(data[0]);
         this.setTitle(data[1]);
         this.setAbout(data[2]);
@@ -94,7 +101,7 @@ public class Exhibit implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[] {
+        dest.writeStringArray(new String[]{
                 this.getId(),
                 this.getTitle(),
                 this.getAbout(),

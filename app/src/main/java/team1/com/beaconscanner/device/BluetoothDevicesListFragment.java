@@ -3,7 +3,6 @@ package team1.com.beaconscanner.device;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,43 +13,39 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 
 import team1.com.beaconscanner.R;
-import team1.com.beaconscanner.exhibit.Exhibit;
-import team1.com.beaconscanner.exhibit.ExhibitListFragment;
 import team1.com.beaconscanner.overview.ListDataInterface;
 
 public class BluetoothDevicesListFragment extends Fragment implements ListDataInterface<MBluetoothDevice> {
-    static String TAG = "BluetoothDevicesListFragment";
-
     private FragmentListener mFragmentListener;
     ListView mListView;
     ProgressBar mProgressBar;
 
     private BluetoothDevicesListFragmentAdapter mFragmentAdapter;
-    private ArrayList <MBluetoothDevice> mBluetoothDevices = new ArrayList<>();
+    private ArrayList<MBluetoothDevice> mBluetoothDevices = new ArrayList<>();
 
     public BluetoothDevicesListFragment() {
     }
 
-    public static BluetoothDevicesListFragment newInstance(ArrayList<MBluetoothDevice> devices) {
+    public static BluetoothDevicesListFragment newInstance() {
         BluetoothDevicesListFragment fragment = new BluetoothDevicesListFragment();
         fragment.setArguments(new Bundle());
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mFragmentListener = (FragmentListener) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Log.d(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_devices_list, container, false);
         mBluetoothDevices = mFragmentListener.getBluetoothDevices();
 
-        mListView= (ListView) view.findViewById(R.id.bluetooth_devics_list);
+        mListView = (ListView) view.findViewById(R.id.bluetooth_devics_list);
         mProgressBar = (ProgressBar) view.findViewById(R.id.devices_loader);
 
         mFragmentAdapter = new BluetoothDevicesListFragmentAdapter(getActivity(), R.layout.fragment_devices_row, mBluetoothDevices);
@@ -68,10 +63,11 @@ public class BluetoothDevicesListFragment extends Fragment implements ListDataIn
         return view;
     }
 
-    private void setVisibilities(){
-        if(mBluetoothDevices.size() == 0){
+    private void setVisibilities() {
+        if (mBluetoothDevices.size() == 0) {
             mListView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
+
             return;
         }
 
@@ -83,12 +79,11 @@ public class BluetoothDevicesListFragment extends Fragment implements ListDataIn
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof FragmentListener) {
             mFragmentListener = (FragmentListener) context;
-        }
-        else {
-            throw new RuntimeException(context.toString()
-                    + " must implement FragmentListener");
+        } else {
+            throw new RuntimeException(context.toString() + " must implement FragmentListener");
         }
     }
 
@@ -100,11 +95,9 @@ public class BluetoothDevicesListFragment extends Fragment implements ListDataIn
 
     @Override
     public void onDataUpdated(ArrayList<MBluetoothDevice> devices) {
-        Log.d(TAG, "onDataUpdated");
-
         mBluetoothDevices = devices;
 
-        if(mFragmentAdapter == null){
+        if (mFragmentAdapter == null) {
             return;
         }
 
@@ -115,7 +108,7 @@ public class BluetoothDevicesListFragment extends Fragment implements ListDataIn
 
     public interface FragmentListener {
         ArrayList<MBluetoothDevice> getBluetoothDevices();
+
         void onBluetoothDeviceItemClick(MBluetoothDevice e);
     }
-
 }

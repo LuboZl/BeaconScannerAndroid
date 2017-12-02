@@ -3,7 +3,6 @@ package team1.com.beaconscanner.exhibit;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +16,13 @@ import team1.com.beaconscanner.R;
 import team1.com.beaconscanner.overview.ListDataInterface;
 
 public class ExhibitListFragment extends Fragment implements ListDataInterface<Exhibit> {
-    static String TAG = "ExhibitListFragment";
-
     private FragmentListener mFragmentListener;
 
     ListView mListView;
     ProgressBar mProgressBar;
 
     private ExhibitListFragmentAdapter mFragmentAdapter;
-    private ArrayList <Exhibit> mExhibits = new ArrayList<>();
+    private ArrayList<Exhibit> mExhibits = new ArrayList<>();
 
     public ExhibitListFragment() {
         // Required empty public constructor
@@ -34,6 +31,7 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
     public static ExhibitListFragment newInstance() {
         ExhibitListFragment fragment = new ExhibitListFragment();
         fragment.setArguments(new Bundle());
+
         return fragment;
     }
 
@@ -41,6 +39,7 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
         ExhibitListFragment fragment = new ExhibitListFragment();
         fragment.mExhibits = exhibits;
         fragment.setArguments(new Bundle());
+
         return fragment;
     }
 
@@ -52,10 +51,7 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Log.d(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_exhibit_list, container, false);
-//        mExhibits = mFragmentListener.getFoundExhibits();
 
         mListView = (ListView) view.findViewById(R.id.exhibit_list);
         mProgressBar = (ProgressBar) view.findViewById(R.id.exhibit_loader);
@@ -76,8 +72,8 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
         return view;
     }
 
-    private void setVisibilities(){
-        if(mExhibits.size() == 0){
+    private void setVisibilities() {
+        if (mExhibits.size() == 0) {
             mListView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             return;
@@ -93,10 +89,8 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
         super.onAttach(context);
         if (context instanceof FragmentListener) {
             mFragmentListener = (FragmentListener) context;
-        }
-        else {
-            throw new RuntimeException(context.toString()
-                    + " must implement FragmentListener");
+        } else {
+            throw new RuntimeException(context.toString() + " must implement FragmentListener");
         }
 
     }
@@ -109,10 +103,9 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
 
     @Override
     public void onDataUpdated(ArrayList<Exhibit> exhibits) {
-        Log.d(TAG, "onDataUpdated");
         mExhibits = exhibits;
 
-        if(mFragmentAdapter == null){
+        if (mFragmentAdapter == null) {
             return;
         }
 
@@ -121,20 +114,7 @@ public class ExhibitListFragment extends Fragment implements ListDataInterface<E
         setVisibilities();
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface FragmentListener {
         void onExhibitItemClick(Exhibit e);
     }
-
-
 }

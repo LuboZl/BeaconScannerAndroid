@@ -1,14 +1,9 @@
 package team1.com.beaconscanner.device;
 
-/**
- * Created by jan on 11/29/17.
- */
-
 public class MBluetoothDevice {
     private String address;
     private String name;
     private Short rssi;
-
 
     public MBluetoothDevice() {
     }
@@ -45,7 +40,7 @@ public class MBluetoothDevice {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return  new MBluetoothDevice(
+        return new MBluetoothDevice(
               this.getAddress(), this.getName(), this.getRssi()
         );
     }

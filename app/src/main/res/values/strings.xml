@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">BeaconScanner</string>
 
+    <!--exhibit-->
+    <string name="distance_unavailable">Nedostupné</string>
+    <string name="distance_very_close">Vzdialenosť: Veľmi blízko</string>
+    <string name="distance_close">Vzdialenosť: Na blízku</string>
+    <string name="distance_nearby">Vzdialenosť: Neďaleko</string>
+    <string name="distance_away">Vzdialenosť: Ďaleko</string>
+
     <!--activity_exhibit_manage-->
     <string name="exhibit_name">Názov exponátu</string>
     <string name="exhibit_about">Popis</string>
@@ -33,5 +40,13 @@
     <string name="fragment_exhibit_row_title">Exponát</string>
     <string name="fragment_exhibit_row_about">Popis</string>
     <string name="fragment_exhibit_info">Približná zdialenosť od vás: X m</string>
+
+    <!--fragment_devices_row-->
+    <string name="fragment_devices_name">Názov zariadenia</string>
+    <string name="fragment_devices_uuid">UUID</string>
+    <string name="fragment_devices_info">Približná zdialenosť od vás: X m</string>
+
+    <!--BluetoothDevicesListFragmentAdapter-->
+    <string name="devices_rssi">RSSI</string>
 
 </resources>
