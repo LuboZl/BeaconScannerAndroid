@@ -51,6 +51,14 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("edit", false);
                 intent.putExtra("exhibit", new Exhibit());
 
+                int numOfBtDevices = mMBluetoothDevices.size();
+                CharSequence beacons[] = new CharSequence[numOfBtDevices];
+
+                for (int i = 0;i<numOfBtDevices;i++){
+                    beacons[i] = mMBluetoothDevices.get(i).getAddress();
+                }
+                intent.putExtra("btDevicesArray",beacons);
+
                 startActivity(intent);
             }
         });

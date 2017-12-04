@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import pub.devrel.easypermissions.EasyPermissions;
 import team1.com.beaconscanner.exhibit.Exhibit;
@@ -68,8 +71,10 @@ public class ExhibitManager extends AppCompatActivity {
         findViewById(R.id.button_beacon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO get beacons by bluetooth scanning
-                final CharSequence beacons[] = new CharSequence[] {"30:20:10:00", "50:40:30:20", "70:60:50:40"};
+
+                Intent intent = getIntent();
+
+                final CharSequence beacons[] = intent.getCharSequenceArrayExtra("btDevicesArray");
                 AlertDialog.Builder builder = new AlertDialog.Builder(ExhibitManager.this);
 
                 builder.setTitle(R.string.exhibit_beacon_title);
@@ -79,6 +84,7 @@ public class ExhibitManager extends AppCompatActivity {
                         addressTextView.setText(beacons[which]);
                     }
                 });
+
                 builder.show();
             }
         });
