@@ -66,6 +66,7 @@ public class ExhibitListFragmentAdapter extends ArrayAdapter<Exhibit> {
                 .into(holder.exhibit_image);
 
         holder.exhibit_distance.setText(exhibit.getDistanceInfo(context));
+        holder.exhibit_distance.setTextColor(exhibit.getDistanceColor(context));
 
         return row;
     }

@@ -3,4 +3,12 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <color name="distance_unavailable">#39000000</color>
+    <color name="distance_very_close">#00C853</color>
+    <color name="distance_close">#FF9800</color>
+    <color name="distance_nearby">#FF5722</color>
+    <color name="distance_away">#D50000</color>
+    
 </resources>

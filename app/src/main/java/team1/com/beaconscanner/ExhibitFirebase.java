@@ -38,13 +38,14 @@ public class ExhibitFirebase {
 
     public void add(Exhibit exhibit) {
         String key = mPreviewsRef.push().getKey();
-
+        exhibit.setRssi(0);
         exhibit.setId(key);
 
         mPreviewsRef.child(key).setValue(exhibit);
     }
 
     public void edit(Exhibit exhibit) {
+        String key = mPreviewsRef.push().getKey();
         mPreviewsRef.child(exhibit.getId()).setValue(exhibit);
     }
 

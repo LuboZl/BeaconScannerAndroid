@@ -52,7 +52,7 @@ public class BluetoothDevicesListFragmentAdapter extends ArrayAdapter<MBluetooth
 
         holder.device_name.setText(device.getName());
         holder.device_address.setText(device.getAddress());
-        holder.device_rssi.setText(context.getString(R.string.devices_rssi) + device.getRssi());
+        holder.device_rssi.setText(context.getString(R.string.devices_rssi) + " " + device.getRssi());
 
         return row;
     }

@@ -3,6 +3,7 @@ package team1.com.beaconscanner.exhibit;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 
 import team1.com.beaconscanner.MainActivity;
 import team1.com.beaconscanner.R;
@@ -81,6 +82,14 @@ public class Exhibit implements Parcelable {
         else if (-this.rssi <= 65) return context.getString(R.string.distance_close);
         else if (-this.rssi <= 80) return context.getString(R.string.distance_nearby);
         else return context.getString(R.string.distance_away);
+    }
+
+    public int getDistanceColor(Context context) {
+        if (this.rssi == 0) return ContextCompat.getColor(context, R.color.distance_unavailable);
+        else if (-this.rssi <= 50) return ContextCompat.getColor(context, R.color.distance_very_close);
+        else if (-this.rssi <= 65) return ContextCompat.getColor(context, R.color.distance_close);
+        else if (-this.rssi <= 80) return ContextCompat.getColor(context, R.color.distance_nearby);
+        else return ContextCompat.getColor(context, R.color.distance_away);
     }
 
     @Override
